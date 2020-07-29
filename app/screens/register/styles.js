@@ -1,32 +1,37 @@
+import { StyleSheet } from 'react-native';
+
 import Colors from '../../assets/colors';
 import Fonts from '../../assets/fonts';
 import Globals from '../../assets/globals';
 
-const styles = {
+const styles = StyleSheet.create({
     container: {
         ...Globals.mainContainer(),
     },
     headerText: {
         ...Globals.headerText,
+        minHeight: 130,
     },
-    loginBox: {
+    registerBox: {
         ...Globals.inputsBox
     },
-    loginArea: {
+    registerArea: {
         flex: 6,
         marginVertical: 20,
     },
     inputField: {
-        ...Globals.inputField, 
+        ...Globals.inputField,
         marginVertical: 10,
     },
-    signinButton: {
+    registerButton: {
         marginVertical: 20,
+        ...Globals.raduisBtn,
+        overflow: 'hidden',
     },
-    signinButtonText: {
-        ...Globals.raduisBtn,  
+    registerButtonText: {
+        ...Globals.raduisBtn,
     },
-    loginIcon: {
+    registerIcon: {
         position: 'absolute',
         top: 13,
         left: 18,
@@ -40,35 +45,27 @@ const styles = {
         textAlign: 'center',
         paddingVertical: 15,
     },
-    signinIcons: {
+    registerIcons: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     },
     googleIcon: {
-        backgroundColor: '#EB4132',
-        marginLeft: 20,
-        padding: 10,
-        borderRadius: 25,
-        width: 50,
-        height: 50,
-        textAlign: 'center',
-        textAlignVertical: 'center',
+        ...Globals.googleIcon,
     },
-    registerArea: {
+    loginArea: {
         flex: 1,
         flexDirection: 'row-reverse',
         justifyContent: 'center',
         alignItems: 'center',
-        layoutDirection: 'rtl',
         position: 'relative',
     },
-    registerText: {
+    loginText: {
         fontFamily: Fonts.beinNormal,
         fontSize: 16,
         textAlign: 'center',
     },
-    registerLink: {
+    loginLink: {
         fontFamily: Fonts.beinNormal,
         fontSize: 16,
         textAlign: 'center',
@@ -76,6 +73,6 @@ const styles = {
         marginRight: 5,
     }
 
-}
+});
 
 export default styles;

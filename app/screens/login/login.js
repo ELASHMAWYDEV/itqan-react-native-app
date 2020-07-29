@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import {
     View,
     Text,
-    ScrollView,
-    Button,
-    TouchableNativeFeedback,
     TouchableOpacity,
     KeyboardAvoidingView,
     TextInput
@@ -12,8 +9,11 @@ import {
 import styles from "./styles";
 import Colors from "../../assets/colors";
 import { AntDesign, FontAwesome, Entypo } from "@expo/vector-icons";
+
+
 //Custom Components
 import InputField from '../../components/inputField';
+import MainButton from "../../components/mainButton";
 
 
 export default class Login extends Component {
@@ -30,25 +30,11 @@ export default class Login extends Component {
                             placeholder="البريد الالكتروني أو رقم الهاتف"
 
                         />
-                    
                         <InputField
                             placeholder="كلمة المرور"
                             secured={true}
                         />
-                        <TouchableOpacity
-                            style={styles.signinButton}
-                            activeOpacity={0.7}
-                        >
-                            <AntDesign
-                                name="login"
-                                size={24}
-                                color={Colors.white}
-                                style={styles.loginIcon}
-                            />
-                            <Text style={styles.signinButtonText}>
-                                تسجيل الدخول
-                            </Text>
-                        </TouchableOpacity>
+                        <MainButton text="تسجيل الدخول" login/>
                         <Text style={styles.forgotPassText}>نسيت كلمة المرور ؟</Text>
                         <Text style={[styles.forgotPassText]}>-----------    أو    -----------</Text>
                         <View style={styles.signinIcons}>

@@ -55,6 +55,18 @@ const Globals = {
         borderTopRightRadius: 30,
         padding: 25,
         
+    },
+
+    //Icons
+    googleIcon: {
+        backgroundColor: '#EB4132',
+        marginLeft: 20,
+        padding: 10,
+        borderRadius: 25,
+        width: 50,
+        height: 50,
+        textAlign: 'center',
+        textAlignVertical: 'center',
     }
 
 }

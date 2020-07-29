@@ -1,8 +1,9 @@
+import { StyleSheet } from 'react-native';
 import Colors from '../../assets/colors';
 import Fonts from '../../assets/fonts';
 import Globals from '../../assets/globals';
 
-const styles = {
+const styles = StyleSheet.create({
     container: {
         ...Globals.mainContainer(),
     },
@@ -16,22 +17,11 @@ const styles = {
         flex: 6,
         marginVertical: 20,
     },
-    inputField: {
-        ...Globals.inputField, 
-        marginVertical: 10,
-    },
     signinButton: {
         marginVertical: 20,
     },
     signinButtonText: {
-        ...Globals.raduisBtn,  
-    },
-    loginIcon: {
-        position: 'absolute',
-        top: 13,
-        left: 18,
-        zIndex: 2,
-        transform: [{ rotateY: "180deg" }],
+        ...Globals.raduisBtn,
     },
     forgotPassText: {
         color: Colors.darkGray,
@@ -60,7 +50,6 @@ const styles = {
         flexDirection: 'row-reverse',
         justifyContent: 'center',
         alignItems: 'center',
-        layoutDirection: 'rtl',
         position: 'relative',
     },
     registerText: {
@@ -76,6 +65,6 @@ const styles = {
         marginRight: 5,
     }
 
-}
+});
 
 export default styles;
