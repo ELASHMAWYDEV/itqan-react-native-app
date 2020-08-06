@@ -10,7 +10,11 @@ class MainButton extends Component {
   state = {};
   render() {
     return (
-      <TouchableNativeFeedback useForeground>
+      <TouchableNativeFeedback
+        useForeground
+        background={TouchableNativeFeedback.Ripple(Colors.black)}
+        onPress={this.props.onPress}
+      >
         <View style={style.btn}>
           {this.props.login && (
             <AntDesign

@@ -17,11 +17,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "itqan"
     },
     "web": {
       "favicon": "./app/assets/main-img/favicon.png"
     },
-    "description": ""
+    "description": "",
+    "android": {
+      "package": "com.itqan.elearning"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }

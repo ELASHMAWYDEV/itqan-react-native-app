@@ -46,7 +46,8 @@ const Globals = {
         color: Colors.white,
         textAlign: 'center',
         textAlignVertical: 'center',
-        fontFamily: Fonts.beinNormal
+        fontFamily: Fonts.beinNormal,
+        minHeight: 130,
     },
     inputsBox: {
         flex: 4,
@@ -67,6 +68,21 @@ const Globals = {
         height: 50,
         textAlign: 'center',
         textAlignVertical: 'center',
+    },
+
+
+    //Frequently used
+    normalText: {
+        fontFamily: Fonts.beinNormal,
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    normalLink: {
+        fontFamily: Fonts.beinNormal,
+        fontSize: 16,
+        textAlign: 'center',
+        color: Colors.primary,
+        marginRight: 5,
     }
 
 }

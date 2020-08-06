@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     },
     headerText: {
         ...Globals.headerText,
-        minHeight: 130,
     },
     registerBox: {
         ...Globals.inputsBox
@@ -19,32 +18,11 @@ const styles = StyleSheet.create({
         flex: 6,
         marginVertical: 20,
     },
-    inputField: {
-        ...Globals.inputField,
-        marginVertical: 10,
-    },
-    registerButton: {
-        marginVertical: 20,
-        ...Globals.raduisBtn,
-        overflow: 'hidden',
-    },
-    registerButtonText: {
-        ...Globals.raduisBtn,
-    },
-    registerIcon: {
-        position: 'absolute',
-        top: 13,
-        left: 18,
-        zIndex: 2,
-        transform: [{ rotateY: "180deg" }],
-    },
-    forgotPassText: {
-        color: Colors.darkGray,
-        fontFamily: Fonts.beinNormal,
-        fontSize: 16,
-        textAlign: 'center',
-        paddingVertical: 15,
-    },
+    termsContainer: {
+        flexDirection: 'row-reverse',
+        alignItems: 'center'
+        
+    },  
     registerIcons: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -58,19 +36,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row-reverse',
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'relative',
     },
-    loginText: {
+    grayText: {
+        color: Colors.darkGray,
         fontFamily: Fonts.beinNormal,
         fontSize: 16,
         textAlign: 'center',
+        paddingVertical: 15,
     },
-    loginLink: {
-        fontFamily: Fonts.beinNormal,
-        fontSize: 16,
-        textAlign: 'center',
-        color: Colors.primary,
-        marginRight: 5,
+    normalText: {
+        ...Globals.normalText,
+    },
+    normalLink: {
+        ...Globals.normalLink,
     }
 
 });
