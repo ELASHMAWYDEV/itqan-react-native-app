@@ -172,8 +172,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
+    elevation: 20,
   },
   barItem: {
     justifyContent: "center",
@@ -187,6 +188,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 60,
     overflow: "hidden",
+
   },
   activeItem: {
     borderRadius: 60 / 2,
@@ -196,6 +198,7 @@ const styles = StyleSheet.create({
     borderWidth: 6,
     borderColor: Colors.white,
     padding: 10,
+    elevation: 1,
   },
   barText: {
     fontSize: 15,

@@ -15,6 +15,7 @@ export default class App extends Component {
   componentDidMount = () => {
     Font.loadAsync({
       "bein-normal": require("./app/assets/fonts/bein-normal.ttf"),
+      "Ionicons": require('react-native-ionicons/fonts/Ionicons.ttf'),
     }).then(() => this.setState({ fontLoaded: true }));
   };
 
