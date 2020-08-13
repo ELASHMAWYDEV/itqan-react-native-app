@@ -9,8 +9,8 @@ import {
 import styles from "./styles";
 
 //Custom Components
-import OtpInput from "../../components/otpInput";
-import MainButton from "../../components/mainButton";
+import OtpInput from "../../components/OtpInput";
+import MainButton from "../../components/MainButton";
 
 export default class Otp extends Component {
   state = {};
@@ -23,7 +23,7 @@ export default class Otp extends Component {
           <View style={styles.resetBox}>
             <View style={styles.resetArea}>
               <OtpInput />
-              <MainButton text="تحقق" />
+              <MainButton text="تحقق" onPress={() => this.props.navigation.navigate("ResetPassSubmit")}/>
             </View>
             <View style={styles.loginArea}>
               <Text style={styles.normalText}>لم يصلك رمز التحقق</Text>

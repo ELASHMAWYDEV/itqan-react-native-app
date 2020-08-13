@@ -23,7 +23,7 @@
     "web": {
       "favicon": "./app/assets/main-img/favicon.png"
     },
-    "description": "",
+    "description": "This is the development build for itqan e-learning app for ios and android",
     "android": {
       "package": "com.itqan.elearning"
     },

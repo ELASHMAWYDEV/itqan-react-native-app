@@ -11,8 +11,8 @@ import {
 import styles from "./styles";
 
 //Custom Components
-import InputField from "../../components/inputField";
-import MainButton from "../../components/mainButton";
+import InputField from "../../components/InputField";
+import MainButton from "../../components/MainButton";
 
 export default class ResetPassAsk extends Component {
     state = {};
@@ -26,13 +26,13 @@ export default class ResetPassAsk extends Component {
             <View style={styles.resetBox}>
               <View style={styles.resetArea}>
                 <InputField placeholder="البريد الالكتروني أو رقم الهاتف" />
-                <MainButton text="طلب رمز استعادة كلمة المرور" />
+                <MainButton text="طلب رمز استعادة كلمة المرور" onPress={() => this.props.navigation.navigate("Otp")}/>
 
               </View>
               <View style={styles.loginArea}>
                   <Text style={styles.normalText}>العودة إلي</Text>
                   <TouchableOpacity activeOpacity={0.5}>
-                    <Text style={styles.normalLink}>تسجيل الدخول</Text>
+                    <Text style={styles.normalLink} onPress={() => this.props.navigation.navigate("Login")}>تسجيل الدخول</Text>
                   </TouchableOpacity>
               </View>
             </View>

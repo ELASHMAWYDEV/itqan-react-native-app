@@ -7,12 +7,11 @@ import {
   ScrollView,
 } from "react-native";
 import styles from "./styles";
-import Colors from "../../assets/colors";
-import { AntDesign, FontAwesome, Entypo } from "@expo/vector-icons";
+import { FontAwesome, Entypo } from "@expo/vector-icons";
 
 //Custom Components
-import InputField from "../../components/inputField";
-import MainButton from "../../components/mainButton";
+import InputField from "../../components/InputField";
+import MainButton from "../../components/MainButton";
 
 export default class Login extends Component {
   state = {};
@@ -27,8 +26,10 @@ export default class Login extends Component {
             <View style={styles.loginArea}>
               <InputField placeholder="البريد الالكتروني أو رقم الهاتف" />
               <InputField placeholder="كلمة المرور" secured={true} />
-              <MainButton text="تسجيل الدخول" login />
-              <Text style={styles.forgotPassText}>نسيت كلمة المرور ؟</Text>
+              <MainButton text="تسجيل الدخول" login onPress={() => this.props.navigation.navigate("Home")}/>
+              <TouchableOpacity>
+                <Text style={styles.forgotPassText} onPress={() => this.props.navigation.navigate("ResetPassAsk")}>نسيت كلمة المرور ؟</Text>
+              </TouchableOpacity>
               <Text style={[styles.forgotPassText]}>
                 ----------- أو -----------
               </Text>
@@ -54,7 +55,12 @@ export default class Login extends Component {
               <KeyboardAvoidingView behavior="height">
                 <Text style={styles.registerText}>لاتمتلك حسابا لدينا ؟</Text>
                 <TouchableOpacity activeOpacity={0.5}>
-                  <Text style={styles.registerLink}>سجل الأن</Text>
+                  <Text
+                    style={styles.registerLink}
+                    onPress={() => this.props.navigation.navigate("Register")}
+                  >
+                    سجل الأن
+                  </Text>
                 </TouchableOpacity>
               </KeyboardAvoidingView>
             </View>

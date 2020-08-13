@@ -14,25 +14,22 @@ import styles from "./styles";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 
 //Custom Components
-import InputField from "../../components/inputField";
-import MainButton from "../../components/mainButton";
-import PhoneInput from "../../components/phoneInput";
+import InputField from "../../components/InputField";
+import MainButton from "../../components/MainButton";
+import PhoneInput from "../../components/PhoneInput";
 
 export default class Register extends Component {
   state = {
     termsChecked: false,
   };
 
-  
-
   toggleCheckBox = (value) => {
     this.setState({ termsChecked: value });
   };
 
-
   alertInputs = () => {
     alert(`phone: ${this.state.phoneNumber}\ncode: ${this.state.countryCode}`);
-  } 
+  };
 
   render() {
     LayoutAnimation.easeInEaseOut();
@@ -59,9 +56,11 @@ export default class Register extends Component {
                 <Text style={styles.normalText}>
                   بإنشائك للحساب يعني موافقتك على
                 </Text>
-                <Text style={styles.normalLink}>الشروط والأحكام</Text>
+                <TouchableOpacity>
+                  <Text style={styles.normalLink}>الشروط والأحكام</Text>
+                </TouchableOpacity>
               </View>
-              <MainButton text="تسجيل" onPress={this.alertInputs}/>
+              <MainButton text="تسجيل" onPress={this.alertInputs} />
 
               <Text style={styles.grayText}>----------- أو -----------</Text>
               <View style={styles.registerIcons}>
@@ -86,7 +85,7 @@ export default class Register extends Component {
               <KeyboardAvoidingView behavior="height">
                 <Text style={styles.normalText}>تمتلك حساب بالفعل</Text>
                 <TouchableOpacity activeOpacity={0.5}>
-                  <Text style={styles.normalLink}>تسجيل الدخول</Text>
+                  <Text style={styles.normalLink} onPress={() => this.props.navigation.navigate("Login")}>تسجيل الدخول</Text>
                 </TouchableOpacity>
               </KeyboardAvoidingView>
             </View>
