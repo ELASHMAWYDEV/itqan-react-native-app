@@ -1,7 +1,15 @@
 import React, { Component } from "react";
-import { View, ScrollView, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 
+
+//Utilities
+import Languages from "../../utility/Languages";
 import pkg from "../../../package.json";
 
 //Components
@@ -9,14 +17,18 @@ import ThreeDots from "../../components/ThreeDots";
 import SettingsOption from "../../components/SettingsOption";
 import ImageCircle from "../../components/ImageCircle";
 
-
 // Customs
 import Colors from "../../assets/colors";
 
 class ProfileSettings extends Component {
   state = {
     notificationsEnabled: true,
+    language: Languages[0],
   };
+
+  changeLang = (newLang) => {
+    this.setState({ language: newLang });
+  }
 
   render() {
     const { navigation } = this.props;
@@ -24,22 +36,28 @@ class ProfileSettings extends Component {
       <View>
         <ThreeDots {...this.props} />
         <ScrollView style={styles.container}>
-          <ImageCircle onPress={() => navigation.navigate("Language")}/>
+          <ImageCircle onPress={() => navigation.navigate("ProfileData")} />
           <SettingsOption
             icon="ios-globe"
             title="اللغة"
-            subTitle="العربية"
-            onPress={() => navigation.navigate("Language")}
+            subTitle={this.state.language.name}
+            onPress={() =>
+              navigation.navigate("Language", {
+                currentLang: this.state.language,
+                changeLang: (newLang) => this.changeLang(newLang),
+              })
+            }
+            
           />
           <SettingsOption
             icon="ios-lock"
             title="تغيير كلمة المرور"
-            onPress={() => navigation.navigate("Language")}
+            onPress={() => navigation.navigate("ChangePass")}
           />
           <SettingsOption
             icon="settings"
             title="التفضيلات"
-            onPress={() => navigation.navigate("Language")}
+            onPress={() => navigation.navigate("Preferences")}
           />
           <SettingsOption
             icon="notifications"
@@ -48,11 +66,12 @@ class ProfileSettings extends Component {
             switch
             enabled={this.state.notificationsEnabled}
             noClick
+            onValueChange={(value) => console.log(value)}
           />
           <SettingsOption
             icon="ios-help-circle"
             title="اتصل بنا"
-            onPress={() => navigation.navigate("Language")}
+            onPress={() => null}
           />
           <SettingsOption
             icon="phone-portrait"
@@ -64,28 +83,34 @@ class ProfileSettings extends Component {
           <SettingsOption
             icon="ios-download"
             title="تنزيل الفيديو"
-            onPress={() => navigation.navigate("Language")}
+            onPress={() => null}
           />
           <SettingsOption
             icon="ios-information-circle"
             title="الشروط والأحكام"
-            onPress={() => navigation.navigate("Language")}
+            onPress={() => null}
+            leftArrow={false}
           />
           <SettingsOption
             icon="ios-share-alt"
             title="مشاركة التطبيق"
-            onPress={() => navigation.navigate("Language")}
+            onPress={() => null}
+            leftArrow={false}
+
           />
           <SettingsOption
             icon="ios-star"
             title="تقييم التطبيق"
-            onPress={() => navigation.navigate("Language")}
+            onPress={() => null}
+            leftArrow={false}
+
           />
           <SettingsOption
             icon="ios-log-out"
             title="تسجيل الخروج"
-            onPress={() => navigation.navigate("Language")}
+            onPress={() => null}
             lastItem
+            leftArrow={false}
           />
           <View style={styles.emptySpace}></View>
         </ScrollView>
@@ -100,10 +125,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  
+
   emptySpace: {
     height: 40,
-  }
+  },
 });
 
 export default ProfileSettings;

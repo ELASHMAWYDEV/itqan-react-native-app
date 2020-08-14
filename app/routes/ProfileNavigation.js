@@ -1,24 +1,25 @@
 import React, { Component } from "react";
-import { View, Text, TouchableNativeFeedback } from "react-native";
+import { View, TouchableNativeFeedback } from "react-native";
 import Icon from "react-native-ionicons";
 
 //Customs
-import Fonts from "../../assets/fonts";
-import Colors from "../../assets/colors";
+import Fonts from "../assets/fonts";
+import Colors from "../assets/colors";
 
 //Navigation
 import { createStackNavigator } from "@react-navigation/stack";
 
 //Screens
-import ProfileSettings from "../ProfileSettings/ProfileSettings";
-import Language from "../Language/Language";
+import { ProfileSettings, Language, ChangePass, Preferences, ProfileData } from "../screens/ProfileScreens/index";
 
 //Components
 
 const Stack = createStackNavigator();
 
-class Home extends Component {
+class ProfileNavigation extends Component {
   state = {};
+
+  
   render() {
     return (
       <Stack.Navigator
@@ -68,7 +69,28 @@ class Home extends Component {
           name="Language"
           component={Language}
           options={{
-            headerTitle: "اللغة",
+            headerTitle: "اختر اللغة",
+          }}
+        />
+        <Stack.Screen
+          name="ChangePass"
+          component={ChangePass}
+          options={{
+            headerTitle: "تغيير كلمة المرور",
+          }}
+        />
+        <Stack.Screen
+          name="Preferences"
+          component={Preferences}
+          options={{
+            headerTitle: "التفضيلات",
+          }}
+        />
+        <Stack.Screen
+          name="ProfileData"
+          component={ProfileData}
+          options={{
+            headerTitle: "معلومات الملف الشخصي",
           }}
         />
       </Stack.Navigator>
@@ -76,4 +98,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default ProfileNavigation;

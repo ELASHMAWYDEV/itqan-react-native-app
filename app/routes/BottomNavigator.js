@@ -25,7 +25,7 @@ import Colors from "../assets/colors";
 import Fonts from "../assets/fonts";
 
 import Home from "../screens/Home/Home";
-import Profile from "../screens/Profile/Profile";
+import ProfileNavigation from "./ProfileNavigation";
 import MyCourses from "../screens/MyCourses/MyCourses";
 import Notifications from "../screens/Notifications/Notifications";
 import Favourites from "../screens/Favourites/Favourites";
@@ -159,7 +159,7 @@ export default class BottomNavigator extends Component {
         <Tab.Screen name="MyCourses" component={MyCourses} />
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Favourites" component={Favourites} />
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="Profile" component={ProfileNavigation} />
       </Tab.Navigator>
     );
   }

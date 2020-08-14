@@ -27,9 +27,11 @@ class ImageCircle extends Component {
             <View>
               <Icon
                 name={props.icon}
-                size={20}
+                size={props.size}
                 color={Colors.white}
-                style={styles.editIcon}
+                style={{
+                  left: props.leftMargin
+                }}
               />
             </View>
           </TouchableOpacity>
@@ -42,7 +44,8 @@ class ImageCircle extends Component {
 ImageCircle.defaultProps = {
   uri: "https://image.flaticon.com/icons/svg/560/560216.svg",
   icon: "create",
-  
+  size: 20,
+  leftMargin: 2,
 }
 
 
@@ -78,9 +81,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     bottom: 0
-  },
-  editIcon: {
-    left: 2,
   },
 })
 

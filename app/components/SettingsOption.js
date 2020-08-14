@@ -24,6 +24,7 @@ class SettingsOptions extends Component {
 
   toggleSwitch = () => {
     this.setState({ enabled: !this.state.enabled });
+    this.props.onValueChange(!this.state.enabled);
   };
 
   render() {
@@ -61,6 +62,14 @@ class SettingsOptions extends Component {
                   size={28}
                 />
               )}
+              {props.checked && (
+                <Icon
+                  name="checkbox-outline"
+                  color={Colors.green}
+                  style={styles.leftArrow}
+                  size={28}
+                />
+              )}
               {props.switch && (
                 <Switch
                   trackColor={{
@@ -89,6 +98,9 @@ SettingsOptions.defaultProps = {
   switch: false,
   enabled: false,
   noClick: false,
+  checked: false,
+  // onValueChange: () => null,
+
 };
 
 const styles = StyleSheet.create({
