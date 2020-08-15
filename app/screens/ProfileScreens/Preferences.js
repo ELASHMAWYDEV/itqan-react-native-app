@@ -9,13 +9,17 @@ import Colors from "../../assets/colors";
 import Fonts from "../../assets/fonts";
 
 
-class ChangePass extends Component {
+class Preferences extends Component {
   state = {
     videoRes: 720
   };
 
+  changeResolution = (videoRes) => {
+    this.setState({ videoRes });
+  }
 
   render() {
+    const { navigation } = this.props;
     return (
       <ScrollView style={styles.container}>
         <View style={styles.section}>
@@ -51,6 +55,13 @@ class ChangePass extends Component {
             title="جودة الفيديو المحمل"
             subTitle={this.state.videoRes}
             icon={false}
+            onPress={() =>
+              navigation.navigate("VideoRes", {
+                currentRes: this.state.videoRes,
+                resolutions: [360, 480, 720, 1080],
+                changeResolution: (newRes) => this.changeResolution(newRes),
+              })
+            }
           />
         </View>
       </ScrollView>
@@ -74,4 +85,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ChangePass;
+export default Preferences;

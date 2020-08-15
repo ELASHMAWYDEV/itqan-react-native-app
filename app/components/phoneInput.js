@@ -29,7 +29,7 @@ class PhoneInput extends Component {
 
   componentDidMount = () => {
     this.props.onChangeCode(this.state.countryCode);
-  }
+  };
 
   toggleCodeModal = () => {
     this.setState({ codeModal: !this.state.codeModal });
@@ -49,7 +49,7 @@ class PhoneInput extends Component {
   };
 
   changePhoneNumber = (phoneNumber) => {
-    if (phoneNumber.startsWith('0')) {
+    if (phoneNumber.startsWith("0")) {
       phoneNumber = phoneNumber.slice(1);
     }
     this.setState({ phoneNumber });
@@ -62,81 +62,85 @@ class PhoneInput extends Component {
     this.toggleCodeModal();
   };
 
-
   render() {
     return (
-      <View style={style.container}>
-        <TextInput
-          style={style.inputField}
-          placeholder="رقم الهاتف"
-          placeholderTextColor={this.props.placeholderColor}
-          autoCorrect={this.props.autoCorrect}
-          secureTextEntry={this.state.secured}
-          selectTextOnFocus={this.state.secured === true ? true : false}
-          onChangeText={(value) => this.changePhoneNumber(value)}
-        />
-        <TouchableWithoutFeedback onPress={() => this.toggleCodeModal()}>
-          <View style={style.codeContainer}>
-            <Text style={style.code}>{this.state.countryCode}</Text>
-            <Ionicons
-              name="ios-arrow-down"
-              size={20}
-              color={Colors.black}
-              style={style.arrow}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-        <Modal
-          style={style.codeListConatiner}
-          visible={this.state.codeModal}
-          animationType="slide"
-          onRequestClose={this.toggleCodeModal}
-        >
-          <View style={style.searchHeader}>
-            <View>
-              <TextInput
-                placeholder="ابحث باسم الدولة بالانجليزية"
-                style={style.codeSearchField}
-                onChangeText={(value) => this.handleSearch(value)}
+      <View>
+        {this.props.titleText && (
+          <Text style={style.titleText}>{this.props.placeholder}</Text>
+        )}
+        <View style={style.container}>
+          <TextInput
+            style={style.inputField}
+            placeholder={this.props.placeholder}
+            placeholderTextColor={this.props.placeholderColor}
+            autoCorrect={this.props.autoCorrect}
+            secureTextEntry={this.state.secured}
+            selectTextOnFocus={this.state.secured === true ? true : false}
+            onChangeText={(value) => this.changePhoneNumber(value)}
+          />
+          <TouchableNativeFeedback useForeground onPress={() => this.toggleCodeModal()}>
+            <View style={style.codeContainer}>
+              <Text style={style.code}>{this.state.countryCode}</Text>
+              <Ionicons
+                name="ios-arrow-down"
+                size={20}
+                color={Colors.black}
+                style={style.arrow}
               />
             </View>
-            <TouchableWithoutFeedback onPress={this.toggleCodeModal}>
-              <AntDesign
-                name="closecircleo"
-                size={24}
-                color={Colors.white}
-                style={style.searchClose}
+          </TouchableNativeFeedback>
+          <Modal
+            style={style.codeListConatiner}
+            visible={this.state.codeModal}
+            animationType="slide"
+            onRequestClose={this.toggleCodeModal}
+          >
+            <View style={style.searchHeader}>
+              <View>
+                <TextInput
+                  placeholder="ابحث باسم الدولة بالانجليزية"
+                  style={style.codeSearchField}
+                  onChangeText={(value) => this.handleSearch(value)}
+                />
+              </View>
+              <TouchableWithoutFeedback onPress={this.toggleCodeModal}>
+                <AntDesign
+                  name="closecircleo"
+                  size={24}
+                  color={Colors.white}
+                  style={style.searchClose}
+                />
+              </TouchableWithoutFeedback>
+            </View>
+            <View style={style.countriesContainer}>
+              <FlatList
+                style={style.codeList}
+                data={this.state.newCountries}
+                renderItem={(item) => (
+                  <TouchableNativeFeedback
+                    useForeground
+                    background={TouchableNativeFeedback.Ripple(Colors.darkGray)}
+                    onPress={() => this.changeCountryCode(item.item.dial_code)}
+                  >
+                    <View style={style.countryListItem}>
+                      <Text style={style.countryCode}>{item.item.code}</Text>
+                      <Text style={style.countryName}>{item.item.name}</Text>
+                      <Text style={style.countryDialCode}>
+                        {item.item.dial_code}
+                      </Text>
+                    </View>
+                  </TouchableNativeFeedback>
+                )}
+                keyExtractor={(item) =>
+                  this.state.countries.indexOf(item).toString()
+                }
+                ItemSeparatorComponent={() => (
+                  <View style={style.lineSeparator}></View>
+                )}
               />
-            </TouchableWithoutFeedback>
-          </View>
-          <View style={style.countriesContainer}>
-            <FlatList
-              style={style.codeList}
-              data={this.state.newCountries}
-              renderItem={(item) => (
-                <TouchableNativeFeedback
-                  useForeground
-                  background={TouchableNativeFeedback.Ripple(Colors.darkGray)}
-                  onPress={() => this.changeCountryCode(item.item.dial_code)}
-                >
-                  <View style={style.countryListItem}>
-                    <Text style={style.countryCode}>{item.item.code}</Text>
-                    <Text style={style.countryName}>{item.item.name}</Text>
-                    <Text style={style.countryDialCode}>
-                      {item.item.dial_code}
-                    </Text>
-                  </View>
-                </TouchableNativeFeedback>
-              )}
-              keyExtractor={(item) =>
-                this.state.countries.indexOf(item).toString()
-              }
-              ItemSeparatorComponent={() => (
-                <View style={style.lineSeparator}></View>
-              )}
-            />
-          </View>
-        </Modal>
+            </View>
+          </Modal>
+        </View>
       </View>
     );
   }
@@ -148,7 +152,7 @@ const style = StyleSheet.create({
   },
   inputField: {
     ...Globals.inputField,
-    width: "70%",
+    width: "60%",
     alignSelf: "flex-end",
   },
   codeContainer: {
@@ -160,6 +164,8 @@ const style = StyleSheet.create({
     paddingHorizontal: 18,
     marginVertical: 10,
     marginLeft: 15,
+    width: 120,
+    overflow: "hidden",
   },
   arrow: {
     marginRight: 10,
@@ -235,13 +241,20 @@ const style = StyleSheet.create({
     marginLeft: "auto",
     marginRight: 15,
   },
+  titleText: {
+    fontFamily: Fonts.beinNormal,
+    color: Colors.gray,
+    fontSize: 18,
+    marginTop: 10,
+  },
 });
 
 PhoneInput.defaultProps = {
-  placeholder: "",
+  placeholder: "رقم الهاتف",
   placeholderColor: Colors.darkGray,
   autoCorrect: false,
   secured: false,
+  titleText: false,
 };
 
 export default PhoneInput;

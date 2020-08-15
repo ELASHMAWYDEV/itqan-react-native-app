@@ -5,8 +5,10 @@ import {
   TouchableNativeFeedback,
   View,
   Text,
+  Modal,
 } from "react-native";
-import { Entypo } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import Icon from "react-native-ionicons";
 
 //Globals
 import Colors from "../assets/colors";
@@ -16,14 +18,33 @@ import Fonts from "../assets/fonts";
 class InputField extends Component {
   state = {
     secured: this.props.secured,
-    eyeIcon: "eye-with-line",
+    eyeIcon: "eye-off",
+    showDatePicker: false,
+    dateOfBirth: this.props.dateOfBirth,
+    value: "",
   };
 
   toggleEye = () => {
     this.setState({
       secured: !this.state.secured,
-      eyeIcon: this.state.secured === true ? "eye" : "eye-with-line",
+      eyeIcon: this.state.secured === true ? "eye" : "eye-off",
     });
+  };
+
+  handleDateOfBirth = (event) => {
+    const timestamp = event.nativeEvent.timestamp;
+
+    //on closing the date picker
+    if (event.type != "set") {
+      return;
+    }
+
+    const day = new Date(timestamp).getDate();
+    const month = new Date(timestamp).getMonth() + 1;
+    const year = new Date(timestamp).getFullYear();
+    const dateOfBirth = `${day}/${month}/${year}`;
+    this.setState({ value: dateOfBirth });
+    this.props.onChangeDate(event);
   };
 
   render() {
@@ -35,27 +56,51 @@ class InputField extends Component {
         <View>
           <TextInput
             style={style.inputField}
-            placeholder={this.props.placeholder}
+            placeholder={this.props.DatePicker ? null : this.props.placeholder}
             placeholderTextColor={this.props.placeholderColor}
             autoCorrect={this.props.autoCorrect}
             secureTextEntry={this.state.secured}
             selectTextOnFocus={this.state.secured === true ? true : false}
+            onChangeText={(value) => this.props.onChangeText(value)}
+            value={this.state.value}
+            editable={this.props.DatePicker ? false : true}
           />
 
           {this.props.secured === true && (
+            <TouchableNativeFeedback useForeground>
+              <View style={style.eyeIcon}>
+                <Icon
+                  name={this.state.eyeIcon}
+                  size={24}
+                  color={
+                    this.state.secured === true ? Colors.darkGray : Colors.black
+                  }
+                  style={style.icon}
+                  onPress={this.toggleEye}
+                />
+              </View>
+            </TouchableNativeFeedback>
+          )}
+          {this.props.DatePicker && (
             <TouchableNativeFeedback
               useForeground
-              background={TouchableNativeFeedback.Ripple(Colors.darkGray)}
+              background={TouchableNativeFeedback.Ripple(Colors.black)}
+              onPress={() =>
+                this.setState({ showDatePicker: !this.state.showDatePicker })
+              }
             >
-              <Entypo
-                name={this.state.eyeIcon}
-                size={24}
-                color={
-                  this.state.secured === true ? Colors.darkGray : Colors.black
-                }
-                style={style.eyeIcon}
-                onPress={this.toggleEye}
-              />
+              <View style={style.calenderIcon}>
+                <Icon name="calendar" size={34} color={Colors.white} />
+                {this.state.showDatePicker && (
+                  <DateTimePicker
+                    mode="date"
+                    display="calendar"
+                    onChange={(event) => this.handleDateOfBirth(event)}
+                    value={this.props.dateOfBirth}
+                    is24Hour={false}
+                  />
+                )}
+              </View>
             </TouchableNativeFeedback>
           )}
         </View>
@@ -70,11 +115,20 @@ InputField.defaultProps = {
   placeholderColor: Colors.darkGray,
   autoCorrect: false,
   secured: false,
+  DatePicker: false,
+  dateOfBirth: new Date("today"),
+  value: "",
 };
 
 const style = StyleSheet.create({
   inputField: {
     ...Globals.inputField,
+  },
+  icon: {
+    width: "100%",
+    height: "100%",
+    textAlign: "center",
+    textAlignVertical: "center",
   },
   eyeIcon: {
     position: "absolute",
@@ -85,8 +139,32 @@ const style = StyleSheet.create({
     height: 50,
     overflow: "hidden",
     borderRadius: 50 / 2,
-    textAlign: "center",
-    textAlignVertical: "center",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  calenderIcon: {
+    position: "absolute",
+    zIndex: 2,
+    top: 10,
+    left: 0,
+    width: 70,
+    height: 48,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.blue,
+    borderBottomLeftRadius: 20,
+    borderTopLeftRadius: 20,
+    overflow: "hidden",
+  },
+  arrowIcon: {
+    position: "absolute",
+    zIndex: 2,
+    top: 9,
+    left: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 50,
+    height: 50,
   },
   titleText: {
     fontFamily: Fonts.beinNormal,

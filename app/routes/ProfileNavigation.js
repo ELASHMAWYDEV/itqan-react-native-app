@@ -10,7 +10,7 @@ import Colors from "../assets/colors";
 import { createStackNavigator } from "@react-navigation/stack";
 
 //Screens
-import { ProfileSettings, Language, ChangePass, Preferences, ProfileData } from "../screens/ProfileScreens/index";
+import { ProfileSettings, Language, ChangePass, Preferences, ProfileData, VideoRes } from "../screens/ProfileScreens/index";
 
 //Components
 
@@ -91,6 +91,13 @@ class ProfileNavigation extends Component {
           component={ProfileData}
           options={{
             headerTitle: "معلومات الملف الشخصي",
+          }}
+        />
+        <Stack.Screen
+          name="VideoRes"
+          component={VideoRes}
+          options={{
+            headerTitle: "اختر الجودة",
           }}
         />
       </Stack.Navigator>

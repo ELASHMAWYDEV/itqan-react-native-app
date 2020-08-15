@@ -5,12 +5,17 @@ import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
 import InputField from "../../components/InputField";
 import MainButton from "../../components/MainButton";
 import ImageCircle from "../../components/ImageCircle";
+import PhoneInput from "../../components/PhoneInput";
+import SelectInput from "../../components/SelectInput";
 
 //Customs
 import Colors from "../../assets/colors";
 
 class ProfileData extends Component {
-  state = {};
+  state = {
+    dateOfBirth: new Date(1598051730000),
+  };
+
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -24,14 +29,37 @@ class ProfileData extends Component {
           <InputField placeholder="الاسم الأول" titleText />
           <InputField placeholder="الاسم الأخير" titleText />
           <InputField placeholder="البريد الالكتروني" titleText />
-          <InputField placeholder="" titleText />
-          <InputField placeholder="الجنس" titleText />
-          <InputField placeholder="تاريخ الميلاد" titleText />
+          <PhoneInput
+            titleText
+            onChangeCode={(countryCode) => this.setState({ countryCode })}
+            onChangePhone={(phoneNumber) => this.setState({ phoneNumber })}
+          />
+          <SelectInput
+            placeholder="الجنس"
+            titleText
+            selection={[
+              {
+                label: "ذكر",
+                value: "male",
+              },
+              {
+                label: "أنثي",
+                value: "female",
+              },
+            ]}
+          />
+          <InputField
+            placeholder="تاريخ الميلاد"
+            titleText
+            DatePicker
+            onChangeDate={(event) => null}
+            dateOfBirth={this.state.dateOfBirth}
+            value={this.state.dateOfBirth.getDay()}
+          />
           <InputField placeholder="الكلية / المدرسة" titleText />
           <InputField placeholder="العنوان" titleText />
           <InputField placeholder="الدولة" titleText />
           <InputField placeholder="المنطقة / المحافظة" titleText />
-
           <MainButton text="حفظ" />
         </View>
       </ScrollView>

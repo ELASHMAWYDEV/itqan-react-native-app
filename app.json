@@ -2,12 +2,13 @@
   "expo": {
     "name": "itqan",
     "slug": "itqan",
+    "scheme": "itqan",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/main-img/icon.png",
     "splash": {
       "image": "./app/assets/main-img/splash.png",
-      "resizeMode": "cover",
+      "resizeMode": "contain",
       "backgroundColor": "#3E47C7"
     },
     "updates": {
