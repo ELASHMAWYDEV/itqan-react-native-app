@@ -64,6 +64,7 @@ class ProfileNavigation extends Component {
             headerLeft: false,
             headerRight: false,
           }}
+          initialParams={{ logout: () => this.props.route.params.logout() }}
         />
         <Stack.Screen
           name="Language"

@@ -21,6 +21,13 @@ import PhoneInput from "../../components/PhoneInput";
 export default class Register extends Component {
   state = {
     termsChecked: false,
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    countryCode: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
   };
 
   toggleCheckBox = (value) => {

@@ -108,7 +108,7 @@ class ProfileSettings extends Component {
           <SettingsOption
             icon="ios-log-out"
             title="تسجيل الخروج"
-            onPress={() => null}
+            onPress={() => this.props.route.params.logout()}
             lastItem
             leftArrow={false}
           />

@@ -19,15 +19,21 @@ export default class App extends Component {
     }).then(() => this.setState({ fontLoaded: true }));
   };
 
+
+  goHome = () => {
+    this.setState({ isSignedIn: !this.state.isSignedIn });
+  }
+
+  logout = () => {
+    this.setState({ isSignedIn: !this.state.isSignedIn });
+  }
   render() {
     return !this.state.fontLoaded ? (
       <LoadingModal />
     ) : this.state.isSignedIn ? (
-      <NavigationContainer>
-        <BottomNavigator />
-      </NavigationContainer>
+        <BottomNavigator logout={() => this.logout()}/>
     ) : (
-      <AuthNavigator />
+        <AuthNavigator goHome={() => this.goHome()}/>
     );
   }
 }

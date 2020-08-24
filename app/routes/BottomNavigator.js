@@ -13,6 +13,7 @@ import {
   Alert,
 } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
 
 import {
   Entypo,
@@ -51,7 +52,6 @@ const BottomTabBar = (props) => {
       return newTabs;
     });
 
-
     // const goBack = (index) => {
     //   index != 2
     //   ? handleTabPress(2)
@@ -70,9 +70,7 @@ const BottomTabBar = (props) => {
     //   "hardwareBackPress",
     //   () => goBack(2)
     // );
-    
   };
-  
 
   // useEffect(() => {
   //   BackHandler.addEventListener(
@@ -114,7 +112,7 @@ const BottomTabBar = (props) => {
       icon: (color) => (
         <MaterialCommunityIcons name="bell-outline" size={24} color={color} />
       ),
-      label: "التنبيهات",
+      label: "الإشعارات",
       active: false,
     },
     {
@@ -151,16 +149,22 @@ const BottomTabBar = (props) => {
 export default class BottomNavigator extends Component {
   render() {
     return (
-      <Tab.Navigator
-        tabBar={(props) => <BottomTabBar {...props} />}
-        initialRouteName="Home"
-      >
-        <Tab.Screen name="Notifications" component={Notifications} />
-        <Tab.Screen name="MyCourses" component={MyCourses} />
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Favourites" component={Favourites} />
-        <Tab.Screen name="Profile" component={ProfileNavigation} />
-      </Tab.Navigator>
+      <NavigationContainer>
+        <Tab.Navigator
+          tabBar={(props) => <BottomTabBar {...props} />}
+          initialRouteName="Home"
+        >
+          <Tab.Screen name="Notifications" component={Notifications} />
+          <Tab.Screen name="MyCourses" component={MyCourses} />
+          <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="Favourites" component={Favourites} />
+          <Tab.Screen
+            name="Profile"
+            component={ProfileNavigation}
+            initialParams={{ logout: () => this.props.logout() }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
     );
   }
 }
@@ -188,7 +192,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 60,
     overflow: "hidden",
-
   },
   activeItem: {
     borderRadius: 60 / 2,

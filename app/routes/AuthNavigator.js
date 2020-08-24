@@ -8,11 +8,11 @@ import Otp from "../screens/otp/otp";
 import ResetPassAsk from "../screens/resetPassAsk/resetPassAsk";
 import ResetPassSubmit from "../screens/resetPassSubmit/resetPassSubmit";
 
-import BottomNavigator from "./BottomNavigator";
+// import BottomNavigator from "./BottomNavigator";
 
 const Stack = createStackNavigator();
 
-export default class Navigator extends Component {
+export default class AuthNavigator extends Component {
   render() {
     return (
       <NavigationContainer>
@@ -20,8 +20,11 @@ export default class Navigator extends Component {
           initialRouteName="Login"
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name="Home" component={BottomNavigator}/>
-          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            initialParams={{ goHome: () => this.props.goHome() }}
+          />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Otp" component={Otp} />
           <Stack.Screen name="ResetPassAsk" component={ResetPassAsk} />
