@@ -1,5 +1,3 @@
-
-    
 const colors = {
     primary: "#3E47C7",
     white: "#ffffff",
@@ -9,6 +7,7 @@ const colors = {
     black: "#000",
     blue: "#3E47C7",
     green: "#7ED321",
+    red: "#eb2f06",
 }
 
 export default colors;

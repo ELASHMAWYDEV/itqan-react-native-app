@@ -3,7 +3,6 @@ import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-ionicons";
 import SvgUri from 'react-native-svg-uri';
 
-import uri from "../assets/img/man.png";
 
 //Customs
 import Colors from "../assets/colors";

@@ -3,9 +3,8 @@ import {
   View,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
-  Image,
 } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 
 //Utilities
@@ -25,6 +24,17 @@ class ProfileSettings extends Component {
     notificationsEnabled: true,
     language: Languages[0],
   };
+
+
+  logout = async () => {
+    try {
+      await AsyncStorage.removeItem("@access_token");
+      await AsyncStorage.removeItem("@user_data");
+      this.props.route.params.logout();
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
 
   changeLang = (newLang) => {
     this.setState({ language: newLang });
@@ -108,7 +118,7 @@ class ProfileSettings extends Component {
           <SettingsOption
             icon="ios-log-out"
             title="تسجيل الخروج"
-            onPress={() => this.props.route.params.logout()}
+            onPress={() => this.logout()}
             lastItem
             leftArrow={false}
           />

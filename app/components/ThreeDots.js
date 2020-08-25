@@ -10,7 +10,6 @@ import {
 } from "react-native";
 
 import { Entypo } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "../assets/colors";
 import Fonts from "../assets/fonts";

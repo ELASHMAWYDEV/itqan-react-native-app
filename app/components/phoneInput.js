@@ -23,8 +23,8 @@ class PhoneInput extends Component {
     codeModal: false,
     countries: Countries,
     newCountries: Countries,
-    phoneNumber: "",
-    countryCode: Countries[0].dial_code,
+    phoneNumber: this.props.phoneNumber,
+    countryCode: this.props.countryCode || Countries[0].dial_code,
   };
 
   componentDidMount = () => {
@@ -77,6 +77,7 @@ class PhoneInput extends Component {
             secureTextEntry={this.state.secured}
             selectTextOnFocus={this.state.secured === true ? true : false}
             onChangeText={(value) => this.changePhoneNumber(value)}
+            value={this.state.phoneNumber}
           />
           <TouchableNativeFeedback useForeground onPress={() => this.toggleCodeModal()}>
             <View style={style.codeContainer}>
@@ -145,6 +146,9 @@ class PhoneInput extends Component {
     );
   }
 }
+
+
+
 
 const style = StyleSheet.create({
   container: {

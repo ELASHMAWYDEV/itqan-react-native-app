@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 //Custom Components
 import InputField from "../../components/InputField";
@@ -14,9 +15,26 @@ import Colors from "../../assets/colors";
 class ProfileData extends Component {
   state = {
     dateOfBirth: new Date(1598051730000),
+    user: {}
   };
 
+
+  componentDidMount = async () => {
+    try {
+      const user = await AsyncStorage.getItem("@user_data");
+      
+      
+      if (user != null) {
+        this.setState({ user: JSON.parse(user) });
+      }
+
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
   render() {
+    const user = this.state.user;
     return (
       <ScrollView style={styles.container}>
         <ImageCircle
@@ -26,13 +44,15 @@ class ProfileData extends Component {
           onPress={() => null}
         />
         <View style={styles.inputsContainer}>
-          <InputField placeholder="الاسم الأول" titleText />
-          <InputField placeholder="الاسم الأخير" titleText />
-          <InputField placeholder="البريد الالكتروني" titleText />
+          <InputField placeholder="الاسم الأول" titleText value={user.firstName}/>
+          <InputField placeholder="الاسم الأخير" titleText value={user.lastName}/>
+          <InputField placeholder="البريد الالكتروني" titleText value={user.email}/>
           <PhoneInput
             titleText
             onChangeCode={(countryCode) => this.setState({ countryCode })}
             onChangePhone={(phoneNumber) => this.setState({ phoneNumber })}
+            countryCode={user.countryCode}
+            phoneNumber={user.phone}
           />
           <SelectInput
             placeholder="الجنس"

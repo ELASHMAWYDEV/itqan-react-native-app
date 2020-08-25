@@ -1,0 +1,16 @@
+{
+  "0": "Unknown Error",
+  "1": "Database Error",
+  "100": "The email address mustn't be empty",
+  "101": "The email address is not registered in the database",
+  "102": "The email address is already registered in the database",
+  "103": "The email address is not valid",
+  "110": "The password mustn't be empty",
+  "111": "The password is incorrect",
+  "112": "The password contain at least 6 characters",
+  "201": "Login Successful",
+  "202": "You have already logged in",
+  "203": "User Registered Successfully"
+  
+
+}
