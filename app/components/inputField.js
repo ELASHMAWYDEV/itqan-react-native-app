@@ -19,16 +19,22 @@ import Fonts from "../assets/fonts";
 
 class InputField extends Component {
   state = {
+    value: this.props.value.toString(),
     secured: this.props.secured,
     eyeIcon: "eye-off",
     showDatePicker: false,
-    dateOfBirth: this.props.dateOfBirth,
+    dateOfBirth: new Date(),
+    dateValue: this.props.dateValue || new Date().getTime(),
     errorVisible: true,
     errorMessage: this.props.errorMessage,
     error: this.props.error,
   };
 
   componentDidMount = () => {
+
+    //convert the date to string
+    this.dateToString(this.state.dateValue);
+
     if (this.state.errorVisible) {
       setTimeout(() => this.toggleError(), 2000);
     }
@@ -66,13 +72,20 @@ class InputField extends Component {
       return;
     }
 
+    //Display the date in dd/mm/yyyy format on the input field
+    this.dateToString(timestamp);
+    this.props.onChangeDate(event);
+  };
+
+
+  dateToString = (timestamp) => {
+    //Display the date in dd/mm/yyyy format on the input field
     const day = new Date(timestamp).getDate();
     const month = new Date(timestamp).getMonth() + 1;
     const year = new Date(timestamp).getFullYear();
-    const dateOfBirth = `${day}/${month}/${year}`;
-    this.setState({ value: dateOfBirth });
-    this.props.onChangeDate(event);
-  };
+    const dateValue = `${day}/${month}/${year}`;
+    this.setState({ dateValue });
+  }
 
   render() {
     return (
@@ -89,10 +102,11 @@ class InputField extends Component {
             secureTextEntry={this.state.secured}
             selectTextOnFocus={this.state.secured === true ? true : false}
             onChangeText={(value) => {
-              this.props.onChangeText(value);
+              this.props.onChangeText(value) !== undefined;
               this.removeError();
+              this.setState({ value });
             }}
-            value={this.props.value}
+            value={this.state.value}
             editable={this.props.DatePicker ? false : true}
           />
 
@@ -128,7 +142,7 @@ class InputField extends Component {
                     mode="date"
                     display="calendar"
                     onChange={(event) => this.handleDateOfBirth(event)}
-                    value={this.props.dateOfBirth}
+                    value={this.state.dateOfBirth}
                     is24Hour={false}
                   />
                 )}
@@ -180,6 +194,7 @@ InputField.defaultProps = {
   value: "",
   error: false,
   errorMessage: "لا يمكنك ترك البريد الالكتروني فارغا",
+  onChangeText: () => null,
 };
 
 const style = StyleSheet.create({

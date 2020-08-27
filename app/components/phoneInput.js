@@ -24,7 +24,7 @@ class PhoneInput extends Component {
     countries: Countries,
     newCountries: Countries,
     phoneNumber: this.props.phoneNumber,
-    countryCode: this.props.countryCode || Countries[0].dial_code,
+    countryCode: this.props.countryCode || "+20",
   };
 
   componentDidMount = () => {
@@ -36,12 +36,15 @@ class PhoneInput extends Component {
   };
 
   handleSearch = (query) => {
+    
     query = query.toLowerCase();
+
     const countries = this.state.countries;
     let newCountries = countries.filter((country) => {
       return (
         country.name.toLowerCase().includes(query) ||
-        country.code.toLowerCase().includes(query)
+        country.code.toLowerCase().includes(query) ||
+        country.dialCode.toString().includes(query)
       );
     });
 
@@ -78,6 +81,8 @@ class PhoneInput extends Component {
             selectTextOnFocus={this.state.secured === true ? true : false}
             onChangeText={(value) => this.changePhoneNumber(value)}
             value={this.state.phoneNumber}
+            maxLength={10}
+            keyboardType="number-pad"
           />
           <TouchableNativeFeedback useForeground onPress={() => this.toggleCodeModal()}>
             <View style={style.codeContainer}>
@@ -121,13 +126,13 @@ class PhoneInput extends Component {
                   <TouchableNativeFeedback
                     useForeground
                     background={TouchableNativeFeedback.Ripple(Colors.darkGray)}
-                    onPress={() => this.changeCountryCode(item.item.dial_code)}
+                    onPress={() => this.changeCountryCode(item.item.dialCode)}
                   >
                     <View style={style.countryListItem}>
                       <Text style={style.countryCode}>{item.item.code}</Text>
                       <Text style={style.countryName}>{item.item.name}</Text>
                       <Text style={style.countryDialCode}>
-                        {item.item.dial_code}
+                        {item.item.dialCode}
                       </Text>
                     </View>
                   </TouchableNativeFeedback>

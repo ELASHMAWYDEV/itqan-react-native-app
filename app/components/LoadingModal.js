@@ -10,10 +10,10 @@ class LoadingModal extends Component {
   render() {
     return (
       <Modal
-        visible={true}
+        visible={this.state.visible}
         transparent={true}
         animationType="fade"
-        onRequestClose={() => this.setState({ visible: !this.state.visible })}
+        onRequestClose={() => this.setState(prevState => ({ ...prevState, visible: false }))}
       >
         <View
           style={{

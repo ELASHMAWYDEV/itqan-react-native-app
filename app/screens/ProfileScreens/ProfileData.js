@@ -14,7 +14,6 @@ import Colors from "../../assets/colors";
 
 class ProfileData extends Component {
   state = {
-    dateOfBirth: new Date(1598051730000),
     user: {}
   };
 
@@ -25,14 +24,15 @@ class ProfileData extends Component {
       
       
       if (user != null) {
-        this.setState({ user: JSON.parse(user) });
+        this.setState(prevState => ({ ...prevState, user: JSON.parse(user) }));
+        alert(this.state.user);
       }
-
+      
     } catch (e) {
       alert(e.message);
     }
   }
-
+  
   render() {
     const user = this.state.user;
     return (
@@ -52,7 +52,7 @@ class ProfileData extends Component {
             onChangeCode={(countryCode) => this.setState({ countryCode })}
             onChangePhone={(phoneNumber) => this.setState({ phoneNumber })}
             countryCode={user.countryCode}
-            phoneNumber={user.phone}
+            phoneNumber={user.phoneNumber}
           />
           <SelectInput
             placeholder="الجنس"
@@ -67,14 +67,15 @@ class ProfileData extends Component {
                 value: "female",
               },
             ]}
+            value={user.gender}
           />
           <InputField
             placeholder="تاريخ الميلاد"
             titleText
             DatePicker
             onChangeDate={(event) => null}
-            dateOfBirth={this.state.dateOfBirth}
-            value={this.state.dateOfBirth.getDay()}
+            dateOfBirth={user.dateOfBirth}
+            dateValue={user.dateOfBirth}
           />
           <InputField placeholder="الكلية / المدرسة" titleText />
           <InputField placeholder="العنوان" titleText />

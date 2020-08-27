@@ -65,7 +65,7 @@ export default class Login extends Component {
     try {
       const accessToken = await AsyncStorage.getItem("@access_token");
 
-      const response = await fetch(`${Config.api}/users/login`, {
+      const response = await fetch(`${Config.api}/auth/login`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

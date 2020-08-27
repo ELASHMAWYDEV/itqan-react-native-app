@@ -14,9 +14,9 @@ import Colors from "../assets/colors";
 import Fonts from "../assets/fonts";
 import Globals from "../assets/globals";
 
-class InputField extends Component {
+class SelectInput extends Component {
   state = {
-    value: this.props.selection[0],
+    value: this.props.value || this.props.selection[0].value,
     modalVisible: false,
   };
 
@@ -27,7 +27,7 @@ class InputField extends Component {
   changeValue = (value) => {
     this.setState({ value });
     this.toggleModal();
-  }
+  };
   render() {
     return (
       <View>
@@ -36,7 +36,11 @@ class InputField extends Component {
         )}
         <TouchableNativeFeedback useForeground onPress={this.toggleModal}>
           <View style={styles.selectContainer}>
-            <Text style={styles.selectedItem}>{this.state.value.label}</Text>
+            <Text style={styles.selectedItem}>
+              {this.props.selection.find(
+                (selectedItem) => selectedItem.value == this.state.value
+              ).label || "اختر"}
+            </Text>
             <View style={styles.arrowIcon}>
               <Icon
                 name="ios-arrow-down"
@@ -56,9 +60,18 @@ class InputField extends Component {
           <View style={styles.modalContainer}>
             <ScrollView style={styles.itemsContainer}>
               {this.props.selection.map((item, index) => (
-                <TouchableNativeFeedback useForeground key={index} onPress={() => this.changeValue(item)}>
+                <TouchableNativeFeedback
+                  useForeground
+                  key={index}
+                  onPress={() => this.changeValue(item.value)}
+                >
                   <View>
-                    <View style={[styles.itemContainer, this.state.value == item && styles.selectedValue]} >
+                    <View
+                      style={[
+                        styles.itemContainer,
+                        this.state.value == item.value && styles.selectedValue,
+                      ]}
+                    >
                       <Text style={styles.itemLabel}>{item.label}</Text>
                     </View>
                     {index != this.props.selection.length - 1 && (
@@ -75,7 +88,7 @@ class InputField extends Component {
   }
 }
 
-InputField.defaultProps = {
+SelectInput.defaultProps = {
   titleText: false,
   placeholder: "اختر",
   placeholderColor: Colors.darkGray,
@@ -144,7 +157,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textAlignVertical: "center",
     color: Colors.white,
-    
   },
   separator: {
     width: "90%",
@@ -154,8 +166,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   selectedValue: {
-    backgroundColor: Colors.green
-  }
+    backgroundColor: Colors.green,
+  },
 });
 
-export default InputField;
+export default SelectInput;

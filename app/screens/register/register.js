@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 
+
 import styles from "./styles";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 
@@ -16,9 +17,12 @@ import { FontAwesome, Entypo } from "@expo/vector-icons";
 import InputField from "../../components/InputField";
 import MainButton from "../../components/MainButton";
 import PhoneInput from "../../components/PhoneInput";
+import Loading from "../../components/LoadingModal";
+
 
 export default class Register extends Component {
   state = {
+    loading: false,
     termsChecked: false,
     firstName: "",
     lastName: "",
@@ -38,23 +42,40 @@ export default class Register extends Component {
   };
 
 
-  register = () => {
+  register = async () => {
     this.setState({ loading: true }); //Loading modal will appear until the fetch is done
 
+    const firstName = this.state.firstName;
+    const lastName = this.state.lastName;
+    const phoneNumber = this.state.phoneNumber;
+    const countryCode = this.state.countryCode;
     const email = this.state.email;
     const password = this.state.password;
 
 
+
+    console.log(JSON.stringify({
+      firstName,
+      lastName,
+      phoneNumber,
+      countryCode,
+      email,
+      password,
+    }));
+    return;
     try {
       const accessToken = await AsyncStorage.getItem("@access_token");
 
-      const response = await fetch(`${Config.api}/users/login`, {
+      const response = await fetch(`${Config.api}/auth/register`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
+          firstName,
+          lastName,
+          phoneNumber,
+          countryCode,
           email,
           password,
         }),
@@ -80,6 +101,7 @@ export default class Register extends Component {
     LayoutAnimation.easeInEaseOut();
     return (
       <ScrollView>
+      {this.state.loading && <Loading />}
         <View style={styles.container}>
           <Text style={styles.headerText}>التسجيل</Text>
           <View style={styles.registerBox}>

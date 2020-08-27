@@ -1,11 +1,6 @@
 import React, { Component } from "react";
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
-
 
 //Utilities
 import Languages from "../../utility/Languages";
@@ -15,6 +10,7 @@ import pkg from "../../../package.json";
 import ThreeDots from "../../components/ThreeDots";
 import SettingsOption from "../../components/SettingsOption";
 import ImageCircle from "../../components/ImageCircle";
+import Prompt from "../../components/Prompt";
 
 // Customs
 import Colors from "../../assets/colors";
@@ -23,22 +19,16 @@ class ProfileSettings extends Component {
   state = {
     notificationsEnabled: true,
     language: Languages[0],
+    logoutPrompt: false,
   };
 
-
   logout = async () => {
-    try {
-      await AsyncStorage.removeItem("@access_token");
-      await AsyncStorage.removeItem("@user_data");
-      this.props.route.params.logout();
-    } catch (e) {
-      console.log(e.message);
-    }
-  }
+    this.props.route.params.logout();
+  };
 
   changeLang = (newLang) => {
     this.setState({ language: newLang });
-  }
+  };
 
   render() {
     const { navigation } = this.props;
@@ -57,7 +47,6 @@ class ProfileSettings extends Component {
                 changeLang: (newLang) => this.changeLang(newLang),
               })
             }
-            
           />
           <SettingsOption
             icon="ios-lock"
@@ -106,22 +95,28 @@ class ProfileSettings extends Component {
             title="مشاركة التطبيق"
             onPress={() => null}
             leftArrow={false}
-
           />
           <SettingsOption
             icon="ios-star"
             title="تقييم التطبيق"
             onPress={() => null}
             leftArrow={false}
-
           />
           <SettingsOption
             icon="ios-log-out"
             title="تسجيل الخروج"
-            onPress={() => this.logout()}
+            onPress={() => this.setState({ logoutPrompt: true })}
             lastItem
             leftArrow={false}
           />
+          {this.state.logoutPrompt && (
+            <Prompt
+              message="هل أنت متأكد أنك تريد تسجيل الخروج ؟"
+              prompt
+              onSubmitValue={(value) => value ? this.logout() : this.setState({ logoutPrompt: false })}
+              visible={this.state.logoutPrompt}
+            />
+          )}
           <View style={styles.emptySpace}></View>
         </ScrollView>
       </View>
