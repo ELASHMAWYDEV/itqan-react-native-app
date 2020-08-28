@@ -5,14 +5,19 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
-  Linking
+  Linking,
+  StyleSheet
 } from "react-native";
 
-import styles from "./styles";
 
 //Custom Components
 import InputField from "../../components/InputField";
 import MainButton from "../../components/MainButton";
+
+
+//Globals
+import Globals from '../../assets/globals';
+
 
 export default class ResetPassAsk extends Component {
     state = {};
@@ -40,4 +45,34 @@ export default class ResetPassAsk extends Component {
         </ScrollView>
       );
     }
+}
+  
+
+
+
+const styles = StyleSheet.create({
+  container: {
+      ...Globals.mainContainer(),
+  },
+  headerText: {
+      ...Globals.headerText,
+  },
+  resetBox: {
+      ...Globals.inputsBox,
+  },
+  resetArea: {
+      marginVertical: 20,
+      flex: 2
+  },
+  loginArea: {
+      flexDirection: 'row-reverse',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  normalText: {
+      ...Globals.normalText,
+  },
+  normalLink: {
+      ...Globals.normalLink,
   }
+});

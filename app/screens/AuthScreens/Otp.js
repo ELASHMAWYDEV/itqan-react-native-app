@@ -4,13 +4,18 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  StyleSheet
 } from "react-native";
 
-import styles from "./styles";
 
 //Custom Components
 import OtpInput from "../../components/OtpInput";
 import MainButton from "../../components/MainButton";
+
+
+//Globals
+import Globals from '../../assets/globals';
+
 
 export default class Otp extends Component {
   state = {};
@@ -37,3 +42,33 @@ export default class Otp extends Component {
     );
   }
 }
+
+
+
+
+const styles = StyleSheet.create({
+  container: {
+      ...Globals.mainContainer(),
+  },
+  headerText: {
+      ...Globals.headerText,
+  },
+  resetBox: {
+      ...Globals.inputsBox,
+  },
+  resetArea: {
+      marginVertical: 20,
+      flex: 2
+  },
+  loginArea: {
+      flexDirection: 'row-reverse',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  normalText: {
+      ...Globals.normalText,
+  },
+  normalLink: {
+      ...Globals.normalLink,
+  }
+});
