@@ -6,11 +6,10 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   LayoutAnimation,
+  StyleSheet,
 } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 
-
-import styles from "./styles";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 
 //Custom Components
@@ -18,6 +17,12 @@ import InputField from "../../components/InputField";
 import MainButton from "../../components/MainButton";
 import PhoneInput from "../../components/PhoneInput";
 import Loading from "../../components/LoadingModal";
+
+
+//Globals
+import Colors from '../../assets/colors';
+import Fonts from '../../assets/fonts';
+import Globals from '../../assets/globals';
 
 
 export default class Register extends Component {
@@ -186,3 +191,54 @@ export default class Register extends Component {
     );
   }
 }
+
+
+
+const styles = StyleSheet.create({
+  container: {
+      ...Globals.mainContainer(),
+  },
+  headerText: {
+      ...Globals.headerText,
+  },
+  registerBox: {
+      ...Globals.inputsBox
+  },
+  registerArea: {
+      flex: 6,
+      marginVertical: 20,
+  },
+  termsContainer: {
+      flexDirection: 'row-reverse',
+      alignItems: 'center'
+      
+  },  
+  registerIcons: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  googleIcon: {
+      ...Globals.googleIcon,
+  },
+  loginArea: {
+      flex: 1,
+      flexDirection: 'row-reverse',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  grayText: {
+      color: Colors.darkGray,
+      fontFamily: Fonts.beinNormal,
+      fontSize: 16,
+      textAlign: 'center',
+      paddingVertical: 15,
+  },
+  normalText: {
+      ...Globals.normalText,
+  },
+  normalLink: {
+      ...Globals.normalLink,
+  }
+
+});

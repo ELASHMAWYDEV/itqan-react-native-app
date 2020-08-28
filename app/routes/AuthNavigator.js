@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 
 import Login from "../screens/login/Login";
-import Register from "../screens/register/register";
+import Register from "../screens/AuthScreens/register";
 import Otp from "../screens/otp/otp";
 import ResetPassAsk from "../screens/resetPassAsk/resetPassAsk";
 import ResetPassSubmit from "../screens/resetPassSubmit/resetPassSubmit";
