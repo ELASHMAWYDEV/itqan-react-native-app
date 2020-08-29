@@ -25,9 +25,6 @@ class InputField extends Component {
     showDatePicker: false,
     dateOfBirth: new Date(),
     dateValue: this.props.dateValue || new Date().getTime(),
-    errorVisible: true,
-    errorMessage: this.props.errorMessage,
-    error: this.props.error,
   };
 
   componentDidMount = () => {
@@ -35,15 +32,6 @@ class InputField extends Component {
     //convert the date to string
     this.dateToString(this.state.dateValue);
 
-    if (this.state.errorVisible) {
-      setTimeout(() => this.toggleError(), 2000);
-    }
-  };
-
-  componentDidUpdate = () => {
-    if (this.state.errorVisible) {
-      setTimeout(() => this.toggleError(), 2000);
-    }
   };
 
   toggleEye = () => {
@@ -53,16 +41,6 @@ class InputField extends Component {
     });
   };
 
-  toggleError = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      errorVisible: !this.state.errorVisible,
-    }));
-  };
-
-  removeError = () => {
-    this.setState((prevState) => ({ ...prevState, error: false }));
-  };
 
   handleDateOfBirth = (event) => {
     const timestamp = event.nativeEvent.timestamp;
@@ -103,7 +81,6 @@ class InputField extends Component {
             selectTextOnFocus={this.state.secured === true ? true : false}
             onChangeText={(value) => {
               this.props.onChangeText(value) !== undefined;
-              this.removeError();
               this.setState({ value });
             }}
             value={this.state.value}
@@ -150,33 +127,6 @@ class InputField extends Component {
             </TouchableNativeFeedback>
           )}
 
-          {this.state.error && (
-            <TouchableOpacity
-              style={style.errorIconContainer}
-              activeOpacity={0.7}
-              onPress={() => this.toggleError()}
-            >
-              <View>
-                {this.props.errorMessage !== "" && this.state.errorVisible && (
-                  <View style={style.errorMessageContainer}>
-                    <View>
-                      <Text style={style.errorMessageText}>
-                        {this.props.errorMessage}
-                      </Text>
-                    </View>
-                    <View style={style.errorTriangle}></View>
-                  </View>
-                )}
-                <View style={style.errorIcon}>
-                  <Icon
-                    name="ios-information-circle"
-                    size={34}
-                    color={Colors.red}
-                  />
-                </View>
-              </View>
-            </TouchableOpacity>
-          )}
         </View>
       </View>
     );
@@ -192,8 +142,6 @@ InputField.defaultProps = {
   DatePicker: false,
   dateOfBirth: new Date("today"),
   value: "",
-  error: false,
-  errorMessage: "لا يمكنك ترك البريد الالكتروني فارغا",
   onChangeText: () => null,
 };
 
@@ -218,51 +166,6 @@ const style = StyleSheet.create({
     borderRadius: 50 / 2,
     justifyContent: "center",
     alignItems: "center",
-  },
-  errorIconContainer: {
-    position: "absolute",
-    zIndex: 3,
-    left: 45,
-    top: 9,
-  },
-  errorIcon: {
-    width: 50,
-    height: 50,
-    borderRadius: 50 / 2,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  errorMessageContainer: {
-    position: "absolute",
-    bottom: 55,
-    left: -22,
-    zIndex: 1,
-    backgroundColor: Colors.black,
-    opacity: 0.8,
-    borderRadius: 8,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    width: 150,
-    elevation: 18,
-  },
-  errorMessageText: {
-    fontFamily: Fonts.beinNormal,
-    color: Colors.white,
-    fontSize: 12,
-    textAlign: "center",
-  },
-  errorTriangle: {
-    position: "absolute",
-    bottom: -11,
-    left: 40,
-    borderBottomColor: Colors.black,
-    borderLeftWidth: 6,
-    borderRightWidth: 6,
-    borderTopWidth: 12,
-    borderStyle: "solid",
-    backgroundColor: "transparent",
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
   },
   calenderIcon: {
     position: "absolute",

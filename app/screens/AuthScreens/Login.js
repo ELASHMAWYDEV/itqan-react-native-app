@@ -36,7 +36,7 @@ export default class Login extends Component {
   };
 
   componentDidMount = async () => {
-    BackHandler.addEventListener("hardwareBackPress", this.promptClose);
+    // BackHandler.addEventListener("hardwareBackPress", this.promptClose);
 
     try {
       const accessToken = await AsyncStorage.getItem("@access_token");
@@ -48,19 +48,8 @@ export default class Login extends Component {
     }
   };
 
-  componentWillUnmount = () => {
-    BackHandler.removeEventListener("hardwareBackPress", this.promptClose);
-  };
 
-  promptClose = () => {
-    this.setState({ promptClose: !this.state.promptClose });
-  };
-
-  closeApp = (value) => {
-    if (value) {
-      BackHandler.exitApp();
-    }
-  };
+ 
 
   login = async () => {
     this.setState({ loading: true }); //Loading modal will appear until the fetch is done
@@ -102,13 +91,7 @@ export default class Login extends Component {
   render() {
     return (
       <ScrollView>
-        {this.state.promptClose && (
-          <Prompt
-            onSubmitValue={this.closeApp}
-            prompt
-            message="هل تريد الخروج من التطبيق ؟"
-          />
-        )}
+        
         {this.state.loading && <Loading />}
         <View style={styles.container}>
           <Text style={styles.headerText}>تسجيل الدخول</Text>

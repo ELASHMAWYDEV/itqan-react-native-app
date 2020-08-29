@@ -1,20 +1,27 @@
 import React, { Component } from "react";
 import * as Font from "expo-font";
-import { NavigationContainer } from '@react-navigation/native';
+import { BackHandler } from 'react-native';
 import AsyncStorage from "@react-native-community/async-storage";
 
 import AuthNavigator from "./app/routes/AuthNavigator";
 import BottomNavigator from "./app/routes/BottomNavigator";
 import LoadingModal from "./app/components/LoadingModal";
 
+
+//Custom Components
+import Prompt from "./app/components/Prompt"; //to handle closing the app
+
+
 export default class App extends Component {
   state = {
     fontLoaded: false,
     isSignedIn: false,
+    promptClose: false,
   };
 
   componentDidMount = async () => {
-    
+    BackHandler.addEventListener("hardwareBackPress", this.promptClose);
+
     try {
       const accessToken = await AsyncStorage.getItem("@access_token");
       const userData = await AsyncStorage.getItem("@user_data");
@@ -32,9 +39,24 @@ export default class App extends Component {
     } catch (e) {
       
     }
-
-    
   };
+
+
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener("hardwareBackPress", this.promptClose);
+  };
+
+  promptClose = () => {
+    this.setState({ promptClose: !this.state.promptClose });
+  };
+
+  closeApp = (value) => {
+    if (value) {
+      BackHandler.exitApp();
+    }
+  };
+
 
 
   login = () => {
@@ -57,8 +79,17 @@ export default class App extends Component {
       <LoadingModal />
     ) : this.state.isSignedIn ? (
         <BottomNavigator logout={() => this.logout()}/>
-    ) : (
-        <AuthNavigator login={() => this.login()}/>
+      ) : (
+          <>
+          {this.state.promptClose && (
+            <Prompt
+              onSubmitValue={this.closeApp}
+              prompt
+              message="هل تريد الخروج من التطبيق ؟"
+            />
+          )}
+            <AuthNavigator login={() => this.login()} />
+          </>
     );
   }
 }

@@ -1,6 +1,4 @@
 import errorCodes from "./errorCodes-ar.json";
-
-
 /*
   All error codes are from 0 to 199 
   All success codes are from 201 to 399
@@ -9,12 +7,28 @@ import errorCodes from "./errorCodes-ar.json";
 
 class ErrorHandler {
 
-  msg = (errCode) => {
+  constructor() {
+    this.errorCodes = errorCodes;
+  }
+  
+  msg = async (errCodes) => {
     try {
-      const message = errorCodes[errCode];
-      return message;
+      if (Array.isArray(errCodes)) {
+        let errors = []; //Initial empty errors array
+
+        //Get the error by its code
+        errCodes.forEach(async (err) => {
+          const message = await this.errorCodes[err.toString()];
+          errors.push(message);
+        });
+
+        return errors;
+
+      } else {
+        return await this.errorCodes[errCodes];
+      }
     } catch (e) {
-      return `Couldn't find error with code: ${errCode}\n${e.message}`;
+      return `Couldn't find error with code: ${errCode}\nError: ${e.message}`;
     }
   }
 

@@ -12,17 +12,18 @@ import {
 } from "../screens/AuthScreens/index";
 
 
+
+
 const Stack = createStackNavigator();
 
 export default class AuthNavigator extends Component {
 
-  
 
   render() {
     return (
       <>
       <NavigationContainer>
-        
+       
         <Stack.Navigator
           initialRouteName="Login"
           screenOptions={{ headerShown: false }}
