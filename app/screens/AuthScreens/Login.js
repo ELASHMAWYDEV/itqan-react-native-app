@@ -50,8 +50,8 @@ export default class Login extends Component {
   login = async () => {
     this.setState({ loading: true }); //Loading modal will appear until the fetch is done
 
-    const email = this.state.email;
-    const password = this.state.password;
+    const email = this.state.email.trim().toLowerCase();
+    const password = this.state.password.trim();
 
     try {
       const accessToken = await AsyncStorage.getItem("@access_token");

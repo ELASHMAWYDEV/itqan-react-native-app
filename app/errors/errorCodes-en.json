@@ -6,6 +6,7 @@
   "102": "The email address is already registered",
   "103": "The email address is not valid",
   "104": "The phone number is not registered",
+  "105": "The phone number is already registered",
   "110": "The password mustn't be empty",
   "111": "The password is incorrect",
   "112": "The password contain at least 6 characters",

@@ -53,13 +53,13 @@ export default class Register extends Component {
   };
 
   register = async () => {
-    const firstName = this.state.firstName;
-    const lastName = this.state.lastName;
-    const phoneNumber = this.state.phoneNumber;
-    const countryCode = this.state.countryCode;
-    const email = this.state.email;
-    const password = this.state.password;
-    const passwordConfirm = this.state.passwordConfirm;
+    const firstName = this.state.firstName.trim();
+    const lastName = this.state.lastName.trim();
+    const phoneNumber = this.state.phoneNumber.trim();
+    const countryCode = this.state.countryCode.trim();
+    const email = this.state.email.trim().toLowerCase();
+    const password = this.state.password.trim();
+    const passwordConfirm = this.state.passwordConfirm.trim();
 
     //Check for Terms & Services checked or not
     if (!this.state.termsChecked) {
@@ -95,8 +95,8 @@ export default class Register extends Component {
         await AsyncStorage.setItem("@access_token", data.accessToken);
         await AsyncStorage.setItem("@user_data", JSON.stringify(data.user));
 
-        alert(JSON.stringify(data, null, 2));
-        // this.props.route.params.login();
+        
+        this.props.route.params.login();
       } else {
         this.setState({ errors: data.codes, success: false });
       }
