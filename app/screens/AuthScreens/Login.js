@@ -33,7 +33,7 @@ export default class Login extends Component {
     password: "",
     promptClose: false,
     errors: [], //pass error codes here ON SUCCESS / ON ERROR
-    success: false
+    success: false,
   };
 
   componentDidMount = async () => {
@@ -74,12 +74,10 @@ export default class Login extends Component {
         await AsyncStorage.setItem("@access_token", data.accessToken);
         await AsyncStorage.setItem("@user_data", JSON.stringify(data.user));
         this.props.route.params.login();
-
       } else if (!data.success) {
-
         this.setState({ errors: data.codes, success: false });
       }
-      
+
       this.setState({ loading: false });
     } catch (e) {
       alert(e.message);
@@ -88,84 +86,90 @@ export default class Login extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <>
         {this.state.errors.length != 0 && (
           <ErrorNotify
             errors={ErrorHandler.msg(this.state.errors)}
-            onClose={() => { this.setState(prevState => ({ ...prevState, errors: [] })) }}
+            onClose={() => {
+              this.setState((prevState) => ({ ...prevState, errors: [] }));
+            }}
             success={this.state.success}
           />
         )}
         {this.state.loading && <Loading />}
-        <View style={styles.container}>
-          <Text style={styles.headerText}>تسجيل الدخول</Text>
-          <View style={styles.loginBox}>
-            <View style={styles.loginArea}>
-              <InputField
-                placeholder="البريد الالكتروني أو رقم الهاتف"
-                onChangeText={(email) => this.setState({ email })}
-                value={this.state.email}
-                error={this.state.emailError ? true : false}
-                errorMessage={this.state.emailError}
-              />
-              <InputField
-                placeholder="كلمة المرور"
-                secured={true}
-                onChangeText={(password) => this.setState({ password })}
-                value={this.state.password}
-                error={this.state.passwordError ? true : false}
-                errorMessage={this.state.passwordError}
-              />
-              <MainButton
-                text="تسجيل الدخول"
-                login
-                onPress={() => this.login()}
-              />
-              <TouchableOpacity>
-                <Text
-                  style={styles.forgotPassText}
-                  onPress={() => this.props.navigation.navigate("ResetPassAsk")}
-                >
-                  نسيت كلمة المرور ؟
-                </Text>
-              </TouchableOpacity>
-              <Text style={[styles.forgotPassText]}>
-                ----------- أو -----------
-              </Text>
-              <View style={styles.signinIcons}>
-                <TouchableOpacity activeOpacity={0.7}>
-                  <Entypo
-                    name="facebook-with-circle"
-                    size={53}
-                    color="#395898"
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.7}>
-                  <FontAwesome
-                    name="google"
-                    size={30}
-                    color="white"
-                    style={styles.googleIcon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.registerArea}>
-              <KeyboardAvoidingView behavior="height">
-                <Text style={styles.registerText}>لاتمتلك حسابا لدينا ؟</Text>
-                <TouchableOpacity activeOpacity={0.5}>
+        <ScrollView>
+          <View style={styles.container}>
+            <Text style={styles.headerText}>تسجيل الدخول</Text>
+            <View style={styles.loginBox}>
+              <View style={styles.loginArea}>
+                <InputField
+                  placeholder="البريد الالكتروني أو رقم الهاتف"
+                  onChangeText={(email) => this.setState({ email })}
+                  value={this.state.email}
+                  error={this.state.emailError ? true : false}
+                  errorMessage={this.state.emailError}
+                />
+                <InputField
+                  placeholder="كلمة المرور"
+                  secured={true}
+                  onChangeText={(password) => this.setState({ password })}
+                  value={this.state.password}
+                  error={this.state.passwordError ? true : false}
+                  errorMessage={this.state.passwordError}
+                />
+                <MainButton
+                  text="تسجيل الدخول"
+                  login
+                  onPress={() => this.login()}
+                />
+                <TouchableOpacity>
                   <Text
-                    style={styles.registerLink}
-                    onPress={() => this.props.navigation.navigate("Register")}
+                    style={styles.forgotPassText}
+                    onPress={() =>
+                      this.props.navigation.navigate("ResetPassAsk")
+                    }
                   >
-                    سجل الأن
+                    نسيت كلمة المرور ؟
                   </Text>
                 </TouchableOpacity>
-              </KeyboardAvoidingView>
+                <Text style={[styles.forgotPassText]}>
+                  ----------- أو -----------
+                </Text>
+                <View style={styles.signinIcons}>
+                  <TouchableOpacity activeOpacity={0.7}>
+                    <Entypo
+                      name="facebook-with-circle"
+                      size={53}
+                      color="#395898"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity activeOpacity={0.7}>
+                    <FontAwesome
+                      name="google"
+                      size={30}
+                      color="white"
+                      style={styles.googleIcon}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={styles.registerArea}>
+                <KeyboardAvoidingView behavior="height">
+                  <Text style={styles.registerText}>لاتمتلك حسابا لدينا ؟</Text>
+                  <TouchableOpacity activeOpacity={0.5}>
+                    <Text
+                      style={styles.registerLink}
+                      onPress={() => this.props.navigation.navigate("Register")}
+                    >
+                      سجل الأن
+                    </Text>
+                  </TouchableOpacity>
+                </KeyboardAvoidingView>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </>
     );
   }
 }

@@ -17,7 +17,7 @@ class ErrorHandler {
 
         //Get the error by its code
         errCodes.forEach((err) => {
-          const message = this.errorCodes[err];
+          const message = this.errorCodes[err.toString()];
           errors.push(message);
         });
 

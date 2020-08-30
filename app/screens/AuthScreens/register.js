@@ -41,7 +41,7 @@ export default class Register extends Component {
     password: "",
     passwordConfirm: "",
     errors: [], //pass error codes here ON SUCCESS / ON ERROR
-    success: false
+    success: false,
   };
 
   toggleCheckBox = (value) => {
@@ -53,8 +53,6 @@ export default class Register extends Component {
   };
 
   register = async () => {
-    this.setState({ loading: true }); //Loading modal will appear until the fetch is done
-
     const firstName = this.state.firstName;
     const lastName = this.state.lastName;
     const phoneNumber = this.state.phoneNumber;
@@ -65,10 +63,15 @@ export default class Register extends Component {
 
     //Check for Terms & Services checked or not
     if (!this.state.termsChecked) {
-      return this.setState({errors: []})
+      return this.setState((prevState) => ({
+        ...prevState,
+        errors: [119],
+        success: false,
+      }));
     }
+
     try {
-      // const accessToken = await AsyncStorage.getItem("@access_token");
+      this.setState({ loading: true }); //Loading modal will appear until the fetch is done
 
       const response = await fetch(`${Config.api}/auth/register`, {
         method: "POST",
@@ -85,16 +88,17 @@ export default class Register extends Component {
           passwordConfirm,
         }),
       });
+
       const data = await response.json();
 
       if (data.success && data.accessToken) {
         await AsyncStorage.setItem("@access_token", data.accessToken);
         await AsyncStorage.setItem("@user_data", JSON.stringify(data.user));
-        this.setState({ loading: false });
-        this.props.route.params.login();
+
+        alert(JSON.stringify(data, null, 2));
+        // this.props.route.params.login();
       } else {
-        this.setState({ loading: false });
-        return alert(JSON.stringify(data, null, 2));
+        this.setState({ errors: data.codes, success: false });
       }
       this.setState({ loading: false });
     } catch (e) {
@@ -105,7 +109,7 @@ export default class Register extends Component {
   render() {
     LayoutAnimation.easeInEaseOut();
     return (
-      <ScrollView>
+      <>
         {this.state.errors.length != 0 && (
           <ErrorNotify
             errors={ErrorHandler.msg(this.state.errors)}
@@ -116,87 +120,91 @@ export default class Register extends Component {
           />
         )}
         {this.state.loading && <Loading />}
-        <View style={styles.container}>
-          <Text style={styles.headerText}>التسجيل</Text>
-          <View style={styles.registerBox}>
-            <View style={styles.registerArea}>
-              <InputField
-                placeholder="الاسم الأول"
-                onChangeText={(firstName) => this.setState({ firstName })}
-              />
-              <InputField
-                placeholder="الاسم الأخير"
-                onChangeText={(lastName) => this.setState({ lastName })}
-              />
-              <PhoneInput
-                onChangeCode={(countryCode) => this.setState({ countryCode })}
-                onChangePhone={(phoneNumber) => this.setState({ phoneNumber })}
-              />
-              <InputField
-                placeholder="البريد الالكتروني"
-                onChangeText={(email) => this.setState({ email })}
-              />
-              <InputField
-                placeholder="كلمة المرور"
-                secured={true}
-                onChangeText={(password) => this.setState({ password })}
-              />
-              <InputField
-                placeholder="تأكيد كلمة المرور"
-                secured={true}
-                onChangeText={(passwordConfirm) =>
-                  this.setState({ passwordConfirm })
-                }
-              />
-              <View style={styles.termsContainer}>
-                <CheckBox
-                  onValueChange={(value) => this.toggleCheckBox(value)}
-                  value={this.state.termsChecked}
+        <ScrollView>
+          <View style={styles.container}>
+            <Text style={styles.headerText}>التسجيل</Text>
+            <View style={styles.registerBox}>
+              <View style={styles.registerArea}>
+                <InputField
+                  placeholder="الاسم الأول"
+                  onChangeText={(firstName) => this.setState({ firstName })}
                 />
-                <Text style={styles.normalText}>
-                  بإنشائك للحساب يعني موافقتك على
-                </Text>
-                <TouchableOpacity>
-                  <Text style={styles.normalLink}>الشروط والأحكام</Text>
-                </TouchableOpacity>
-              </View>
-              <MainButton text="تسجيل" onPress={this.register} />
-
-              <Text style={styles.grayText}>----------- أو -----------</Text>
-              <View style={styles.registerIcons}>
-                <TouchableOpacity activeOpacity={0.7}>
-                  <Entypo
-                    name="facebook-with-circle"
-                    size={53}
-                    color="#395898"
+                <InputField
+                  placeholder="الاسم الأخير"
+                  onChangeText={(lastName) => this.setState({ lastName })}
+                />
+                <PhoneInput
+                  onChangeCode={(countryCode) => this.setState({ countryCode })}
+                  onChangePhone={(phoneNumber) =>
+                    this.setState({ phoneNumber })
+                  }
+                />
+                <InputField
+                  placeholder="البريد الالكتروني"
+                  onChangeText={(email) => this.setState({ email })}
+                />
+                <InputField
+                  placeholder="كلمة المرور"
+                  secured={true}
+                  onChangeText={(password) => this.setState({ password })}
+                />
+                <InputField
+                  placeholder="تأكيد كلمة المرور"
+                  secured={true}
+                  onChangeText={(passwordConfirm) =>
+                    this.setState({ passwordConfirm })
+                  }
+                />
+                <View style={styles.termsContainer}>
+                  <CheckBox
+                    onValueChange={(value) => this.toggleCheckBox(value)}
+                    value={this.state.termsChecked}
                   />
-                </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.7}>
-                  <FontAwesome
-                    name="google"
-                    size={30}
-                    color="white"
-                    style={styles.googleIcon}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.loginArea}>
-              <KeyboardAvoidingView behavior="height">
-                <Text style={styles.normalText}>تمتلك حساب بالفعل</Text>
-                <TouchableOpacity activeOpacity={0.5}>
-                  <Text
-                    style={styles.normalLink}
-                    onPress={() => this.props.navigation.navigate("Login")}
-                  >
-                    تسجيل الدخول
+                  <Text style={styles.normalText}>
+                    بإنشائك للحساب يعني موافقتك على
                   </Text>
-                </TouchableOpacity>
-              </KeyboardAvoidingView>
+                  <TouchableOpacity>
+                    <Text style={styles.normalLink}>الشروط والأحكام</Text>
+                  </TouchableOpacity>
+                </View>
+                <MainButton text="تسجيل" onPress={this.register} />
+
+                <Text style={styles.grayText}>----------- أو -----------</Text>
+                <View style={styles.registerIcons}>
+                  <TouchableOpacity activeOpacity={0.7}>
+                    <Entypo
+                      name="facebook-with-circle"
+                      size={53}
+                      color="#395898"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity activeOpacity={0.7}>
+                    <FontAwesome
+                      name="google"
+                      size={30}
+                      color="white"
+                      style={styles.googleIcon}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={styles.loginArea}>
+                <KeyboardAvoidingView behavior="height">
+                  <Text style={styles.normalText}>تمتلك حساب بالفعل</Text>
+                  <TouchableOpacity activeOpacity={0.5}>
+                    <Text
+                      style={styles.normalLink}
+                      onPress={() => this.props.navigation.navigate("Login")}
+                    >
+                      تسجيل الدخول
+                    </Text>
+                  </TouchableOpacity>
+                </KeyboardAvoidingView>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </>
     );
   }
 }
