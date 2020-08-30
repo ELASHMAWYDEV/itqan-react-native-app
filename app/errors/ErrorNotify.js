@@ -13,6 +13,8 @@ import {
 import Colors from "../assets/colors";
 import Fonts from "../assets/fonts";
 
+
+
 export default class ErrorNotify extends Component {
   state = {
     errorsVisible: true,

@@ -20,12 +20,14 @@ import MainButton from "../../components/MainButton";
 import PhoneInput from "../../components/PhoneInput";
 import Loading from "../../components/LoadingModal";
 
-
 //Globals
-import Colors from '../../assets/colors';
-import Fonts from '../../assets/fonts';
-import Globals from '../../assets/globals';
+import Colors from "../../assets/colors";
+import Fonts from "../../assets/fonts";
+import Globals from "../../assets/globals";
 
+//Error Hanlders
+import ErrorHandler from "../../errors/ErrorHandler";
+import ErrorNotify from "../../errors/ErrorNotify";
 
 export default class Register extends Component {
   state = {
@@ -38,6 +40,8 @@ export default class Register extends Component {
     email: "",
     password: "",
     passwordConfirm: "",
+    errors: [], //pass error codes here ON SUCCESS / ON ERROR
+    success: false
   };
 
   toggleCheckBox = (value) => {
@@ -47,7 +51,6 @@ export default class Register extends Component {
   alertInputs = () => {
     alert(`phone: ${this.state.phoneNumber}\ncode: ${this.state.countryCode}`);
   };
-
 
   register = async () => {
     this.setState({ loading: true }); //Loading modal will appear until the fetch is done
@@ -60,8 +63,10 @@ export default class Register extends Component {
     const password = this.state.password;
     const passwordConfirm = this.state.passwordConfirm;
 
-
-
+    //Check for Terms & Services checked or not
+    if (!this.state.termsChecked) {
+      return this.setState({errors: []})
+    }
     try {
       // const accessToken = await AsyncStorage.getItem("@access_token");
 
@@ -77,7 +82,7 @@ export default class Register extends Component {
           countryCode,
           email,
           password,
-          passwordConfirm
+          passwordConfirm,
         }),
       });
       const data = await response.json();
@@ -95,13 +100,22 @@ export default class Register extends Component {
     } catch (e) {
       alert(e.message);
     }
-  }
+  };
 
   render() {
     LayoutAnimation.easeInEaseOut();
     return (
       <ScrollView>
-      {this.state.loading && <Loading />}
+        {this.state.errors.length != 0 && (
+          <ErrorNotify
+            errors={ErrorHandler.msg(this.state.errors)}
+            onClose={() => {
+              this.setState((prevState) => ({ ...prevState, errors: [] }));
+            }}
+            success={this.state.success}
+          />
+        )}
+        {this.state.loading && <Loading />}
         <View style={styles.container}>
           <Text style={styles.headerText}>التسجيل</Text>
           <View style={styles.registerBox}>
@@ -187,53 +201,49 @@ export default class Register extends Component {
   }
 }
 
-
-
 const styles = StyleSheet.create({
   container: {
-      ...Globals.mainContainer(),
+    ...Globals.mainContainer(),
   },
   headerText: {
-      ...Globals.headerText,
+    ...Globals.headerText,
   },
   registerBox: {
-      ...Globals.inputsBox
+    ...Globals.inputsBox,
   },
   registerArea: {
-      flex: 6,
-      marginVertical: 20,
+    flex: 6,
+    marginVertical: 20,
   },
   termsContainer: {
-      flexDirection: 'row-reverse',
-      alignItems: 'center'
-      
-  },  
+    flexDirection: "row-reverse",
+    alignItems: "center",
+  },
   registerIcons: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   googleIcon: {
-      ...Globals.googleIcon,
+    ...Globals.googleIcon,
   },
   loginArea: {
-      flex: 1,
-      flexDirection: 'row-reverse',
-      justifyContent: 'center',
-      alignItems: 'center',
+    flex: 1,
+    flexDirection: "row-reverse",
+    justifyContent: "center",
+    alignItems: "center",
   },
   grayText: {
-      color: Colors.darkGray,
-      fontFamily: Fonts.beinNormal,
-      fontSize: 16,
-      textAlign: 'center',
-      paddingVertical: 15,
+    color: Colors.darkGray,
+    fontFamily: Fonts.beinNormal,
+    fontSize: 16,
+    textAlign: "center",
+    paddingVertical: 15,
   },
   normalText: {
-      ...Globals.normalText,
+    ...Globals.normalText,
   },
   normalLink: {
-      ...Globals.normalLink,
-  }
-
+    ...Globals.normalLink,
+  },
 });
