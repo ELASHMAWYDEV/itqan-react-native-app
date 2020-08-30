@@ -11,24 +11,20 @@ class ErrorHandler {
     this.errorCodes = errorCodes;
   }
   
-  msg = async (errCodes) => {
+  msg = (errCodes) => {
     try {
-      if (Array.isArray(errCodes)) {
         let errors = []; //Initial empty errors array
 
         //Get the error by its code
-        errCodes.forEach(async (err) => {
-          const message = await this.errorCodes[err.toString()];
+        errCodes.forEach((err) => {
+          const message = this.errorCodes[err];
           errors.push(message);
         });
 
-        return errors;
-
-      } else {
-        return await this.errorCodes[errCodes];
-      }
+      return errors;
+      
     } catch (e) {
-      return `Couldn't find error with code: ${errCode}\nError: ${e.message}`;
+      return [`Couldn't find error with code: ${errCode}\nError: ${e.message}`];
     }
   }
 

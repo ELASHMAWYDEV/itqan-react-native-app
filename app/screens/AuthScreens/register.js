@@ -9,8 +9,10 @@ import {
   StyleSheet,
 } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
-
+import AsyncStorage from "@react-native-community/async-storage";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
+
+import * as Config from "../../config/config";
 
 //Custom Components
 import InputField from "../../components/InputField";
@@ -56,20 +58,12 @@ export default class Register extends Component {
     const countryCode = this.state.countryCode;
     const email = this.state.email;
     const password = this.state.password;
+    const passwordConfirm = this.state.passwordConfirm;
 
 
 
-    console.log(JSON.stringify({
-      firstName,
-      lastName,
-      phoneNumber,
-      countryCode,
-      email,
-      password,
-    }));
-    return;
     try {
-      const accessToken = await AsyncStorage.getItem("@access_token");
+      // const accessToken = await AsyncStorage.getItem("@access_token");
 
       const response = await fetch(`${Config.api}/auth/register`, {
         method: "POST",
@@ -83,6 +77,7 @@ export default class Register extends Component {
           countryCode,
           email,
           password,
+          passwordConfirm
         }),
       });
       const data = await response.json();
@@ -90,10 +85,10 @@ export default class Register extends Component {
       if (data.success && data.accessToken) {
         await AsyncStorage.setItem("@access_token", data.accessToken);
         await AsyncStorage.setItem("@user_data", JSON.stringify(data.user));
+        this.setState({ loading: false });
         this.props.route.params.login();
       } else {
         this.setState({ loading: false });
-
         return alert(JSON.stringify(data, null, 2));
       }
       this.setState({ loading: false });

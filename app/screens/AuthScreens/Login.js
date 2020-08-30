@@ -16,28 +16,27 @@ import * as Config from "../../config/config";
 //Custom Components
 import InputField from "../../components/InputField";
 import MainButton from "../../components/MainButton";
-import Prompt from "../../components/Prompt";
 import Loading from "../../components/LoadingModal";
 
-//Error Hanlder
+//Error Hanlders
 import ErrorHandler from "../../errors/ErrorHandler";
+import ErrorNotify from "../../errors/ErrorNotify";
 
 //Globals
-import Colors from '../../assets/colors';
-import Fonts from '../../assets/fonts';
-import Globals from '../../assets/globals';
-
+import Colors from "../../assets/colors";
+import Fonts from "../../assets/fonts";
+import Globals from "../../assets/globals";
 
 export default class Login extends Component {
   state = {
     email: "",
     password: "",
     promptClose: false,
+    errors: [], //pass error codes here ON SUCCESS / ON ERROR
+    success: false
   };
 
   componentDidMount = async () => {
-    // BackHandler.addEventListener("hardwareBackPress", this.promptClose);
-
     try {
       const accessToken = await AsyncStorage.getItem("@access_token");
       if (accessToken !== null) {
@@ -47,9 +46,6 @@ export default class Login extends Component {
       alert(e.message);
     }
   };
-
-
- 
 
   login = async () => {
     this.setState({ loading: true }); //Loading modal will appear until the fetch is done
@@ -69,6 +65,7 @@ export default class Login extends Component {
         body: JSON.stringify({
           email,
           password,
+          loginType: "email",
         }),
       });
       const data = await response.json();
@@ -77,11 +74,12 @@ export default class Login extends Component {
         await AsyncStorage.setItem("@access_token", data.accessToken);
         await AsyncStorage.setItem("@user_data", JSON.stringify(data.user));
         this.props.route.params.login();
-      } else {
-        this.setState({ loading: false });
 
-        return alert(JSON.stringify(data, null, 2));
+      } else if (!data.success) {
+
+        this.setState({ errors: data.codes, success: false });
       }
+      
       this.setState({ loading: false });
     } catch (e) {
       alert(e.message);
@@ -91,7 +89,13 @@ export default class Login extends Component {
   render() {
     return (
       <ScrollView>
-        
+        {this.state.errors.length != 0 && (
+          <ErrorNotify
+            errors={ErrorHandler.msg(this.state.errors)}
+            onClose={() => { this.setState(prevState => ({ ...prevState, errors: [] })) }}
+            success={this.state.success}
+          />
+        )}
         {this.state.loading && <Loading />}
         <View style={styles.container}>
           <Text style={styles.headerText}>تسجيل الدخول</Text>
@@ -166,68 +170,65 @@ export default class Login extends Component {
   }
 }
 
-
-
 const styles = StyleSheet.create({
   container: {
-      ...Globals.mainContainer(),
+    ...Globals.mainContainer(),
   },
   headerText: {
-      ...Globals.headerText,
+    ...Globals.headerText,
   },
   loginBox: {
-      ...Globals.inputsBox
+    ...Globals.inputsBox,
   },
   loginArea: {
-      flex: 6,
-      marginVertical: 20,
+    flex: 6,
+    marginVertical: 20,
   },
   signinButton: {
-      marginVertical: 20,
+    marginVertical: 20,
   },
   signinButtonText: {
-      ...Globals.raduisBtn,
+    ...Globals.raduisBtn,
   },
   forgotPassText: {
-      color: Colors.darkGray,
-      fontFamily: Fonts.beinNormal,
-      fontSize: 16,
-      textAlign: 'center',
-      paddingVertical: 15,
+    color: Colors.darkGray,
+    fontFamily: Fonts.beinNormal,
+    fontSize: 16,
+    textAlign: "center",
+    paddingVertical: 15,
   },
   signinIcons: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   googleIcon: {
-      backgroundColor: '#EB4132',
-      marginLeft: 20,
-      padding: 10,
-      borderRadius: 25,
-      width: 50,
-      height: 50,
-      textAlign: 'center',
-      textAlignVertical: 'center',
+    backgroundColor: "#EB4132",
+    marginLeft: 20,
+    padding: 10,
+    borderRadius: 25,
+    width: 50,
+    height: 50,
+    textAlign: "center",
+    textAlignVertical: "center",
   },
   registerArea: {
-      flex: 1,
-      flexDirection: 'row-reverse',
-      justifyContent: 'center',
-      alignItems: 'center',
-      position: 'relative',
+    flex: 1,
+    flexDirection: "row-reverse",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
   },
   registerText: {
-      fontFamily: Fonts.beinNormal,
-      fontSize: 16,
-      textAlign: 'center',
+    fontFamily: Fonts.beinNormal,
+    fontSize: 16,
+    textAlign: "center",
   },
   registerLink: {
-      fontFamily: Fonts.beinNormal,
-      fontSize: 16,
-      textAlign: 'center',
-      color: Colors.primary,
-      marginRight: 5,
-  }
-
+    fontFamily: Fonts.beinNormal,
+    fontSize: 16,
+    textAlign: "center",
+    color: Colors.primary,
+    marginRight: 5,
+  },
 });

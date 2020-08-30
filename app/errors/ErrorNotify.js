@@ -19,11 +19,13 @@ export default class ErrorNotify extends Component {
     clearBtnAnim: new Animated.Value(50),
     hideErrors: false,
     errorsContainerAnim: new Animated.Value(0),
+    errorCount: this.props.errors.length
   };
 
   static defaultProps = {
     errors: [],
-    success: true,
+    success: false,
+    onClose: () => null,
   };
 
   componentDidMount = () => {
@@ -35,8 +37,13 @@ export default class ErrorNotify extends Component {
     }).start();
 
     //remove the errors after seconds
-    setTimeout(this.removeErrors, this.props.errors.length * 1800);
+    // setTimeout(() => this.removeErrors(), this.props.errors.length * 1800);
   };
+
+
+  componentDidUpdate = () => {
+    if (this.state.errorCount == 0) this.removeErrors();
+  }
 
   removeErrors = () => {
     Animated.spring(this.state.clearBtnAnim, {
@@ -52,15 +59,22 @@ export default class ErrorNotify extends Component {
       useNativeDriver: false,
     }).start();
 
-    //remove the ErrorNotify from the component tree
+    //remove the ErrorNotify from the component tree & Call the onClose prop
     setTimeout(
-      () =>
+      () => {
         this.setState((prevState) => ({
           ...prevState,
           errorsVisible: !this.state.errorsVisible,
-        })),
+        }));
+        
+        this.props.onClose();
+      }
+      ,
       500
     );
+
+    //send onClose to the parent component
+    
   };
 
   render() {
@@ -94,19 +108,11 @@ export default class ErrorNotify extends Component {
                   <ErrorContainer
                     key={index}
                     success={this.props.success}
-                  >
-                    {error}
-                  </ErrorContainer>
+                    text={error}
+                    removeOneError={() => this.setState({errorCount: this.state.errorCount - 1})} 
+                  />
                 );
               })}
-
-            {!Array.isArray(this.props.errors) && (
-              <ErrorContainer
-                success={this.props.success}
-              >
-                {this.props.errors}
-              </ErrorContainer>
-            )}
           </Animated.View>
         </View>
       )
@@ -177,11 +183,15 @@ class ErrorContainer extends Component {
                 backgroundColor: this.props.success ? Colors.green : Colors.red,
               },
             ]}
-            onPress={this.hideError}
+            onPress={() => {
+              this.hideError();
+              this.props.removeOneError();
+              }
+            }
             underlayColor={Colors.black}
           >
             <Text style={styles.text} numberOfLines={2}>
-              {this.props.children}
+              {this.props.text}
             </Text>
           </TouchableHighlight>
         </Animated.View>
