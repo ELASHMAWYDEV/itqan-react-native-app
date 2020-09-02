@@ -25,7 +25,7 @@ class ProfileData extends Component {
       
       if (user != null) {
         this.setState(prevState => ({ ...prevState, user: JSON.parse(user) }));
-        alert(this.state.user);
+        console.log(user);
       }
       
     } catch (e) {
@@ -34,7 +34,7 @@ class ProfileData extends Component {
   }
   
   render() {
-    const user = this.state.user;
+    let user = this.state.user;
     return (
       <ScrollView style={styles.container}>
         <ImageCircle

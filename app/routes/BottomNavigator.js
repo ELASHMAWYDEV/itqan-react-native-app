@@ -1,16 +1,12 @@
 /*
   Believe me "You Don't Want To Read This File :D"
 */
-
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState } from "react";
 import {
   View,
-  Text,
   TouchableWithoutFeedback,
   StyleSheet,
   Animated,
-  BackHandler,
-  Alert,
 } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -33,118 +29,202 @@ import Favourites from "../screens/Favourites/Favourites";
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabBar = (props) => {
-  //Animation
-  // const iconMarginBottom = useState(new Animated.Value(0))[0];
-  // const iconBackgroundColor = useState(new Animated.Value(0))[0];
-  // const textDisplay = useState(new Animated.Value(0))[0];
-  // const iconColor = useState(new Animated.Value(0))[0];
+class BottomTabBar extends Component {
 
-  //Animation Functions
-  const handleTabPress = (index) => {
-    props.navigation.navigate(tabs[index].name);
-    setTabs((tabs) => {
-      let newTabs = [];
-      tabs.map((t, i) => {
-        i == index ? (t.active = true) : (t.active = false);
-        newTabs.push(t);
-      });
-      return newTabs;
-    });
-
-    // const goBack = (index) => {
-    //   index != 2
-    //   ? handleTabPress(2)
-    //   : Alert.alert("اغلاق التطبيق", "هل تريد حقا الخروج من التطبيق ؟", [
-    //       {
-    //         text: "نعم",
-    //         onPress: () => BackHandler.exitApp(),
-    //       },
-    //       {
-    //         text: "لا",
-    //       },
-    //     ])
-    // };
-
-    // BackHandler.addEventListener(
-    //   "hardwareBackPress",
-    //   () => goBack(2)
-    // );
-  };
-
-  // useEffect(() => {
-  //   BackHandler.addEventListener(
-  //     "hardwareBackPress",
-  //     Alert.alert("اغلاق التطبيق", "هل تريد حقا الخروج من التطبيق ؟", [
-  //       {
-  //         text: "نعم",
-  //         onPress: () => BackHandler.exitApp(),
-  //       },
-  //       {
-  //         text: "لا",
-  //       },
-  //     ])
-  //   );
-  // });
 
   //All used tabs within the navigator
-  const [tabs, setTabs] = useState([
-    {
-      name: "Profile",
-      icon: (color) => <Feather name="user" size={24} color={color} />,
-      label: "حسابي",
-      active: false,
-    },
-    {
-      name: "MyCourses",
-      icon: (color) => <Feather name="play-circle" size={24} color={color} />,
-      label: "دوراتي",
-      active: false,
-    },
-    {
-      name: "Home",
-      icon: (color) => <Entypo name="home" size={24} color={color} />,
-      label: "الرئيسية",
-      active: true,
-    },
-    {
-      name: "Notifications",
-      icon: (color) => (
-        <MaterialCommunityIcons name="bell-outline" size={24} color={color} />
-      ),
-      label: "الإشعارات",
-      active: false,
-    },
-    {
-      name: "Favourites",
-      icon: (color) => <AntDesign name="hearto" size={24} color={color} />,
-      label: "المفضلة",
-      active: false,
-    },
-  ]);
+  state = {
+    tabs: [
+      {
+        name: "Profile",
+        icon: (color) => <Feather name="user" size={24} color={color} />,
+        label: "حسابي",
+        active: false,
+      },
+      {
+        name: "MyCourses",
+        icon: (color) => <Feather name="play-circle" size={24} color={color} />,
+        label: "دوراتي",
+        active: false,
+      },
+      {
+        name: "Home",
+        icon: (color) => <Entypo name="home" size={24} color={color} />,
+        label: "الرئيسية",
+        active: true,
+      },
+      {
+        name: "Notifications",
+        icon: (color) => (
+          <MaterialCommunityIcons name="bell-outline" size={24} color={color} />
+        ),
+        label: "الإشعارات",
+        active: false,
+      },
+      {
+        name: "Favourites",
+        icon: (color) => <AntDesign name="hearto" size={24} color={color} />,
+        label: "المفضلة",
+        active: false,
+      },
+    ]
+  }
 
-  return (
-    <View style={styles.bar}>
-      {tabs.map((tab, index) => (
+
+  
+  handleTabPress = async (index) => {
+    this.props.navigation.navigate(this.state.tabs[index].name);
+    let newTabs = [];
+
+    this.state.tabs.map((t, i) => {
+      i == index ? (t.active = true) : (t.active = false);
+      newTabs.push(t);
+    });
+
+    this.setState(prevState => ({...prevState, tabs: newTabs}));
+  };
+
+  render() {
+    return (
+      <View style={styles.bar}>
+        {this.state.tabs.map((tab, index) => (
+          <IconItem
+            key={index}
+            tab={tab}
+            handleTabPress={() => this.handleTabPress(index)}
+          />
+        ))}
+      </View>
+    );
+  }
+};
+
+class IconItem extends Component {
+  state = {
+    //Animation
+    iconPadding: new Animated.Value(0),
+    iconTop: new Animated.Value(0),
+    iconElevation: new Animated.Value(0),
+    iconWidth: new Animated.Value(0),
+    iconScale: new Animated.Value(0),
+    textBottom: new Animated.Value(-20),
+  };
+
+  componentDidMount = () => {
+    this.animateIcon();
+  }
+
+  animateIcon = () => {
+    let {
+      iconPadding,
+      iconTop,
+      iconElevation,
+      iconWidth,
+      iconScale,
+      textBottom,
+    } = this.state;
+    
+    const duration = 100; //All animations duration
+
+    //reset the animation first
+    iconPadding.setValue(0);
+    iconTop.setValue(0);
+    iconElevation.setValue(0);
+    iconWidth.setValue(0);
+    iconScale.setValue(0);
+    textBottom.setValue(0);
+
+    //Do the new Animation
+    Animated.parallel([
+      Animated.timing(iconPadding, {
+        toValue: 10,
+        duration,
+        useNativeDriver: false,
+      }),
+      Animated.spring(iconTop, {
+        toValue: -35,
+        duration,
+        useNativeDriver: false,
+      }),
+      Animated.timing(iconElevation, {
+        toValue: 1,
+        duration,
+        useNativeDriver: false,
+      }),
+      Animated.timing(iconWidth, {
+        toValue: 6,
+        duration,
+        useNativeDriver: false,
+      }),
+      Animated.spring(iconScale, {
+        toValue: 1.1,
+        duration,
+        useNativeDriver: false,
+      }),
+      Animated.spring(textBottom, {
+        toValue: 5,
+        duration,
+        useNativeDriver: false,
+      }),
+    ]).start();
+
+    //Colors animation based on iconElevation animation
+    let iconBgColor = iconElevation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [Colors.white, Colors.primary]
+    });
+
+    this.setState({ iconBgColor });
+
+  };
+
+
+  render() {
+    let tab = this.props.tab;
+    return (
+      <>
         <TouchableWithoutFeedback
-          key={index}
-          onPress={() => handleTabPress(index)}
+          onPress={() => {
+            if (!tab.active) {
+              this.props.handleTabPress();
+              this.animateIcon();
+            } else {
+              this.props.handleTabPress();              
+            }
+          }}
         >
           <Animated.View style={[styles.barItem]}>
             <Animated.View
-              style={[styles.barIcon, tab.active && styles.activeItem]}
+              style={[
+                styles.barIcon,
+                tab.active && {
+                  padding: this.state.iconPadding,
+                  top: this.state.iconTop,
+                  elevation: this.state.iconElevation,
+                  borderWidth: this.state.iconWidth,
+                  transform: [{ scale: this.state.iconScale }],
+                  backgroundColor: this.state.iconBgColor,
+                },
+              ]}
             >
               {tab.icon(tab.active ? Colors.white : Colors.darkGray)}
             </Animated.View>
-            <Text style={[styles.barText, tab.active && styles.barTextAcitve]}>
+            <Animated.Text
+              style={[
+                styles.barText,
+                tab.active && {
+                  bottom: this.state.textBottom,
+                },
+              ]}
+            >
               {tab.label}
-            </Text>
+            </Animated.Text>
           </Animated.View>
         </TouchableWithoutFeedback>
-      ))}
-    </View>
-  );
-};
+      </>
+    );
+  }
+}
 
 export default class BottomNavigator extends Component {
   render() {
@@ -176,8 +256,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    // borderTopLeftRadius: 20,
-    // borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     elevation: 20,
   },
   barItem: {
@@ -192,25 +272,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 60,
     overflow: "hidden",
-  },
-  activeItem: {
-    borderRadius: 60 / 2,
-    backgroundColor: Colors.primary,
-    top: -5,
-    transform: [{ scale: 1.1 }],
-    borderWidth: 6,
     borderColor: Colors.white,
-    padding: 10,
-    elevation: 1,
+    borderRadius: 60 / 2,
   },
   barText: {
+    position: "absolute",
+    bottom: -20,
     fontSize: 15,
     fontFamily: Fonts.beinNormal,
-    marginBottom: 10,
     color: Colors.blue,
-    display: "none",
-  },
-  barTextAcitve: {
-    display: "flex",
   },
 });

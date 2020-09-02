@@ -1,13 +1,17 @@
+
+//All colors must be in RGB or RGBA format
+
 const colors = {
-    primary: "#3E47C7",
-    white: "#ffffff",
-    gray: "#989898",
-    darkGray: "#CACACA",
-    lightGray: "#F2F2F2",
-    black: "#000",
-    blue: "#3E47C7",
-    green: "#7ED321",
-    red: "#eb2f06",
+    primary: "rgb(62,71,199)",
+    white: "rgb(255,255,255)",
+    gray: "rgb(152,152,152)",
+    darkGray: "rgb(202,202,202)",
+    lightGray: "rgb(242,242,242)",
+    black: "rgb(0,0,0)",
+    blue: "rgb(62,71,199)",
+    green: "rgb(126,211,33)",
+    red: "rgb(235,47,6)",
 }
+
 
 export default colors;

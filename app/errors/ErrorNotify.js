@@ -13,15 +13,13 @@ import {
 import Colors from "../assets/colors";
 import Fonts from "../assets/fonts";
 
-
-
 export default class ErrorNotify extends Component {
   state = {
     errorsVisible: true,
     clearBtnAnim: new Animated.Value(50),
     hideErrors: false,
     errorsContainerAnim: new Animated.Value(0),
-    errorCount: this.props.errors.length
+    errorCount: this.props.errors.length,
   };
 
   static defaultProps = {
@@ -42,41 +40,35 @@ export default class ErrorNotify extends Component {
     // setTimeout(() => this.removeErrors(), this.props.errors.length * 1800);
   };
 
-
   componentDidUpdate = () => {
     if (this.state.errorCount == 0) this.removeErrors();
-  }
+  };
 
   removeErrors = () => {
-    Animated.spring(this.state.clearBtnAnim, {
-      toValue: 100,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
+    //Animate errors and clear btn in parallel
+    Animated.parallel([
+      Animated.spring(this.state.clearBtnAnim, {
+        toValue: 100,
+        duration: 200,
+        useNativeDriver: false,
+      }),
 
-    //Animate errors container
-    Animated.spring(this.state.errorsContainerAnim, {
-      toValue: -350,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
+      Animated.spring(this.state.errorsContainerAnim, {
+        toValue: -350,
+        duration: 300,
+        useNativeDriver: false,
+      }),
+    ]).start(() => {
+      //remove the ErrorNotify from the component tree & Call the onClose prop
 
-    //remove the ErrorNotify from the component tree & Call the onClose prop
-    setTimeout(
-      () => {
-        this.setState((prevState) => ({
-          ...prevState,
-          errorsVisible: !this.state.errorsVisible,
-        }));
-        
-        this.props.onClose();
-      }
-      ,
-      500
-    );
+      this.setState((prevState) => ({
+        ...prevState,
+        errorsVisible: !this.state.errorsVisible,
+      }));
+      //send onClose to the parent component
 
-    //send onClose to the parent component
-    
+      this.props.onClose();
+    });
   };
 
   render() {
@@ -111,7 +103,9 @@ export default class ErrorNotify extends Component {
                     key={index}
                     success={this.props.success}
                     text={error}
-                    removeOneError={() => this.setState({errorCount: this.state.errorCount - 1})} 
+                    removeOneError={() =>
+                      this.setState({ errorCount: this.state.errorCount - 1 })
+                    }
                   />
                 );
               })}
@@ -161,10 +155,9 @@ class ErrorContainer extends Component {
       useNativeDriver: false,
     }).start();
 
-    setTimeout(
-      () => this.setState((prevState) => ({ ...prevState, exist: false })),
-      400
-    );
+    setTimeout(() =>
+      this.setState((prevState) => ({ ...prevState, exist: false }))
+      , 250);
   };
 
   render() {
@@ -188,8 +181,7 @@ class ErrorContainer extends Component {
             onPress={() => {
               this.hideError();
               this.props.removeOneError();
-              }
-            }
+            }}
             underlayColor={Colors.black}
           >
             <Text style={styles.text} numberOfLines={2}>
