@@ -10,7 +10,14 @@ import Colors from "../assets/colors";
 import { createStackNavigator } from "@react-navigation/stack";
 
 //Screens
-import { ProfileSettings, Language, ChangePass, Preferences, ProfileData, VideoRes } from "../screens/ProfileScreens/index";
+import {
+  ProfileSettings,
+  Language,
+  ChangePass,
+  Preferences,
+  ProfileData,
+  VideoRes,
+} from "../screens/ProfileScreens/index";
 
 //Components
 
@@ -19,7 +26,6 @@ const Stack = createStackNavigator();
 class ProfileNavigation extends Component {
   state = {};
 
-  
   render() {
     return (
       <Stack.Navigator

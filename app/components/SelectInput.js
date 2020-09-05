@@ -7,50 +7,29 @@ import {
   Modal,
   ScrollView,
 } from "react-native";
-import Icon from "react-native-ionicons";
 
 //Globals
 import Colors from "../assets/colors";
 import Fonts from "../assets/fonts";
-import Globals from "../assets/globals";
 
 class SelectInput extends Component {
   state = {
     value: this.props.value || this.props.selection[0].value,
-    modalVisible: false,
+    modalVisible: this.props.visible,
   };
 
   toggleModal = () => {
     this.setState({ modalVisible: !this.state.modalVisible });
+    this.props.toggleSelection();
   };
 
   changeValue = (value) => {
     this.setState({ value });
+    this.props.onSelectValue(value);
     this.toggleModal();
   };
   render() {
     return (
-      <View>
-        {this.props.titleText && (
-          <Text style={styles.titleText}>{this.props.placeholder}</Text>
-        )}
-        <TouchableNativeFeedback useForeground onPress={this.toggleModal}>
-          <View style={styles.selectContainer}>
-            <Text style={styles.selectedItem}>
-              {this.props.selection.find(
-                (selectedItem) => selectedItem.value == this.state.value
-              ).label || "اختر"}
-            </Text>
-            <View style={styles.arrowIcon}>
-              <Icon
-                name="ios-arrow-down"
-                size={28}
-                style={styles.icon}
-                color={Colors.darkGray}
-              />
-            </View>
-          </View>
-        </TouchableNativeFeedback>
         <Modal
           visible={this.state.modalVisible}
           transparent
@@ -83,55 +62,22 @@ class SelectInput extends Component {
             </ScrollView>
           </View>
         </Modal>
-      </View>
     );
   }
 }
 
 SelectInput.defaultProps = {
-  titleText: false,
-  placeholder: "اختر",
-  placeholderColor: Colors.darkGray,
-  selection: [],
+  visible: false,
+  iconSize: 28,
+  onSelectValue: (value) => null,
+  toggleSelection: () => null,
+  selection: [{
+    value: "",
+    label: ""
+  }],
 };
 
 const styles = StyleSheet.create({
-  selectContainer: {
-    ...Globals.inputField,
-    ...Globals.raduisBox,
-    overflow: "hidden",
-    paddingHorizontal: 25,
-  },
-  selectedItem: {
-    height: "100%",
-    width: "100%",
-    backgroundColor: Colors.lightGray,
-    textAlign: "right",
-    fontFamily: Fonts.beinNormal,
-    fontSize: 18,
-  },
-  icon: {
-    width: "100%",
-    height: "100%",
-    textAlign: "center",
-    textAlignVertical: "center",
-  },
-  arrowIcon: {
-    position: "absolute",
-    zIndex: 2,
-    top: 10,
-    left: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 50,
-    height: "100%",
-  },
-  titleText: {
-    fontFamily: Fonts.beinNormal,
-    color: Colors.gray,
-    fontSize: 18,
-    marginTop: 10,
-  },
   modalContainer: {
     backgroundColor: "rgba(0,0,0,0.4)",
     flex: 1,

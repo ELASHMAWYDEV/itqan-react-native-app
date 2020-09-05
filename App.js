@@ -49,6 +49,7 @@ export default class App extends Component {
 
   promptClose = () => {
     this.setState({ promptClose: !this.state.promptClose });
+    return true;
   };
 
   closeApp = (value) => {

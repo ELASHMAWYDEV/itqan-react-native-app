@@ -1,12 +1,13 @@
 /*
   Believe me "You Don't Want To Read This File :D"
 */
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import {
   View,
   TouchableWithoutFeedback,
   StyleSheet,
   Animated,
+  BackHandler,
 } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -21,7 +22,7 @@ import {
 import Colors from "../assets/colors";
 import Fonts from "../assets/fonts";
 
-import Home from "../screens/Home/Home";
+import HomeNavigation from "./HomeNavigation";
 import ProfileNavigation from "./ProfileNavigation";
 import MyCourses from "../screens/MyCourses/MyCourses";
 import Notifications from "../screens/Notifications/Notifications";
@@ -30,6 +31,20 @@ import Favourites from "../screens/Favourites/Favourites";
 const Tab = createBottomTabNavigator();
 
 class BottomTabBar extends Component {
+
+  componentDidMount = () => {
+    BackHandler.addEventListener("hardwaretabpress", this.handleBackPress);
+  }
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener("hardwaretabpress", this.handleBackPress)
+  }
+
+
+  handleBackPress = async () => {
+    this.handleTabPress("Home");
+    return true;
+  }
 
 
   //All used tabs within the navigator
@@ -72,12 +87,12 @@ class BottomTabBar extends Component {
 
 
   
-  handleTabPress = async (index) => {
-    this.props.navigation.navigate(this.state.tabs[index].name);
+  handleTabPress = async (tabName) => {
+    this.props.navigation.navigate(tabName);
     let newTabs = [];
 
-    this.state.tabs.map((t, i) => {
-      i == index ? (t.active = true) : (t.active = false);
+    this.state.tabs.map(t => {
+      t.name == tabName ? (t.active = true) : (t.active = false);
       newTabs.push(t);
     });
 
@@ -91,7 +106,7 @@ class BottomTabBar extends Component {
           <IconItem
             key={index}
             tab={tab}
-            handleTabPress={() => this.handleTabPress(index)}
+            handleTabPress={() => this.handleTabPress(tab.name)}
           />
         ))}
       </View>
@@ -100,6 +115,7 @@ class BottomTabBar extends Component {
 };
 
 class IconItem extends Component {
+  
   state = {
     //Animation
     iconPadding: new Animated.Value(0),
@@ -227,16 +243,18 @@ class IconItem extends Component {
 }
 
 export default class BottomNavigator extends Component {
+  
   render() {
     return (
       <NavigationContainer>
         <Tab.Navigator
           tabBar={(props) => <BottomTabBar {...props} />}
           initialRouteName="Home"
+          backBehavior="none"
         >
           <Tab.Screen name="Notifications" component={Notifications} />
           <Tab.Screen name="MyCourses" component={MyCourses} />
-          <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="Home" component={HomeNavigation} />
           <Tab.Screen name="Favourites" component={Favourites} />
           <Tab.Screen
             name="Profile"
