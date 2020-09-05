@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     top: -10,
   },
   tabsContainer: {
-    width: "90%",
+    width: "95%",
     backgroundColor: Colors.white,
     alignSelf: "center",
     borderRadius: 20,
