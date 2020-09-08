@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     fontSize: 15,
     textAlignVertical: "center",
-    fontWeight: "700",
-    marginEnd: 10,
+     marginEnd: 10,
   },
 });

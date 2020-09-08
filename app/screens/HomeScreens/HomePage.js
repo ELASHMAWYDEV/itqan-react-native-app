@@ -28,7 +28,7 @@ export default class HomePage extends Component {
   state = {};
   render() {
     return (
-      <ScrollView style={styles.mainContainer}>
+      <ScrollView style={styles.mainContainer} nestedScrollEnabled={true}>
         <View style={styles.imageSliderContainer}>
           <Image
             style={{

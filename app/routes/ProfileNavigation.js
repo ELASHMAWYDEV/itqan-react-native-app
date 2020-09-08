@@ -34,6 +34,7 @@ class ProfileNavigation extends Component {
           headerTitleStyle: {
             fontFamily: Fonts.beinNormal,
             textAlign: "center",
+            fontSize: 22
           },
           headerLeft: ({ onPress }) => {
             this.goBack = onPress;

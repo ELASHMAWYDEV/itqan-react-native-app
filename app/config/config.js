@@ -1,1 +1,1 @@
-export const api = "http://192.168.1.145:4000/api";
+export const api = "https://itqan-api.herokuapp.com/api";

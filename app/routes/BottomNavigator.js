@@ -24,9 +24,9 @@ import Fonts from "../assets/fonts";
 
 import HomeNavigation from "./HomeNavigation";
 import ProfileNavigation from "./ProfileNavigation";
-import MyCourses from "../screens/MyCourses/MyCourses";
+import { MyCoursesPage } from "../screens/MyCourses/index";
 import Notifications from "../screens/Notifications/Notifications";
-import Favourites from "../screens/Favourites/Favourites";
+import { Favourites } from "../screens/Favourites/index";
 
 const Tab = createBottomTabNavigator();
 
@@ -57,7 +57,7 @@ class BottomTabBar extends Component {
         active: false,
       },
       {
-        name: "MyCourses",
+        name: "MyCoursesPage",
         icon: (color) => <Feather name="play-circle" size={24} color={color} />,
         label: "دوراتي",
         active: false,
@@ -253,7 +253,7 @@ export default class BottomNavigator extends Component {
           backBehavior="none"
         >
           <Tab.Screen name="Notifications" component={Notifications} />
-          <Tab.Screen name="MyCourses" component={MyCourses} />
+          <Tab.Screen name="MyCoursesPage" component={MyCoursesPage} />
           <Tab.Screen name="Home" component={HomeNavigation} />
           <Tab.Screen name="Favourites" component={Favourites} />
           <Tab.Screen

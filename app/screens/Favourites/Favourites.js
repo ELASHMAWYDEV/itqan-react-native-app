@@ -1,19 +1,16 @@
-import React, { Component } from "react";
-import { View, Text } from "react-native";
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
 
-class Home extends Component {
-  state = {};
+
+//Navigator
+import FavouritesNavigator from "../../routes/FavouritesNavigator";
+
+export default class Favourites extends Component {
+
+
   render() {
     return (
-      <View style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1
-      }}>
-        <Text>Favourites</Text>
-      </View>
+      <FavouritesNavigator />
     );
   }
 }
-
-export default Home;

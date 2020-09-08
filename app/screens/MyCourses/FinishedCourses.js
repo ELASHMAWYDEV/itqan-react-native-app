@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-export default class MyCourses extends Component {
+export default class FinishedCourses extends Component {
 
 
   render() {
     return (
       <View>
-        <Text> MyCourses </Text>
+        <Text> FinishedCourses </Text>
       </View>
     );
   }

@@ -18,7 +18,7 @@ import {
   Categories,
   LiveSessions,
   Materials,
-  MyCourses,
+  Courses,
 } from "../screens/HomePageScreens/index";
 
 //Globals
@@ -35,11 +35,12 @@ export default class HomePageNavigator extends Component {
         style={styles.navigationContainer}
         backBehavior="initialRoute"
         removeClippedSubviews={true}
+        initialRouteName="Courses"
       >
-        <Tab.Screen name="MyCourses" component={MyCourses} />
-        <Tab.Screen name="Materials" component={Materials} />
-        <Tab.Screen name="LiveSessions" component={LiveSessions} />
-        <Tab.Screen name="Categories" component={Categories} />
+      <Tab.Screen name="Categories" component={Categories} />
+      <Tab.Screen name="LiveSessions" component={LiveSessions} />
+      <Tab.Screen name="Materials" component={Materials} />
+      <Tab.Screen name="Courses" component={Courses} />
       </Tab.Navigator>
     );
   }
@@ -49,8 +50,8 @@ class NavigationTabs extends Component {
   state = {
     tabs: [
       {
-        name: "MyCourses",
-        label: "دوراتي",
+        name: "Courses",
+        label: "دورات",
         icon: () => <MaterialIcons name="computer" size={34} color="white" />,
         active: true,
       },
@@ -92,7 +93,7 @@ class NavigationTabs extends Component {
   };
 
   goToInitialRoute = async () => {
-    await this.goToTab("MyCourses");
+    await this.goToTab("Courses");
     return true;
   };
 
