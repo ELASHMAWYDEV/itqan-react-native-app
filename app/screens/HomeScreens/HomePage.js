@@ -7,7 +7,8 @@ import {
   Image,
   TextInput,
   TouchableNativeFeedback,
-  ScrollView
+  ScrollView,
+  SafeAreaView
 } from "react-native";
 import Icon from "react-native-ionicons";
 
@@ -28,7 +29,7 @@ export default class HomePage extends Component {
   state = {};
   render() {
     return (
-      <ScrollView style={styles.mainContainer} nestedScrollEnabled={true}>
+      <SafeAreaView style={styles.mainContainer}>
         <View style={styles.imageSliderContainer}>
           <Image
             style={{
@@ -76,7 +77,7 @@ export default class HomePage extends Component {
           />
         </View>
         <HomePageNavigator />
-      </ScrollView>
+      </SafeAreaView>
     );
   }
 }

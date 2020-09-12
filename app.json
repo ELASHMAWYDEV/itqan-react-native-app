@@ -28,6 +28,11 @@
     "android": {
       "package": "com.itqan.elearning"
     },
-    "entryPoint": "node_modules/expo/AppEntry.js"
+    "sdkVersion": "38.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ]
   }
 }

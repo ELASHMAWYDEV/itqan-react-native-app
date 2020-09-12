@@ -290,12 +290,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "itqan";
+				PRODUCT_BUNDLE_IDENTIFIER = org.name.itqan;
 				PRODUCT_NAME = itqan;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
-				CODE_SIGN_ENTITLEMENTS = W:\Free Lancing\احمد غريب_مستقل\Project\itqan\ios\itqan\itqan.entitlements;
 			};
 			name = Debug;
 		};
@@ -314,11 +313,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "itqan";
+				PRODUCT_BUNDLE_IDENTIFIER = org.name.itqan;
 				PRODUCT_NAME = itqan;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
-				CODE_SIGN_ENTITLEMENTS = W:\Free Lancing\احمد غريب_مستقل\Project\itqan\ios\itqan\itqan.entitlements;
 			};
 			name = Release;
 		};
@@ -379,9 +377,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				PRODUCT_BUNDLE_IDENTIFIER = "itqan";
-				PRODUCT_NAME = itqan;
-				CODE_SIGN_ENTITLEMENTS = W:\Free Lancing\احمد غريب_مستقل\Project\itqan\ios\itqan\itqan.entitlements;
 			};
 			name = Debug;
 		};
@@ -435,9 +430,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "itqan";
-				PRODUCT_NAME = itqan;
-				CODE_SIGN_ENTITLEMENTS = W:\Free Lancing\احمد غريب_مستقل\Project\itqan\ios\itqan\itqan.entitlements;
 			};
 			name = Release;
 		};

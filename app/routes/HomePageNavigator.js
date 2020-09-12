@@ -33,7 +33,7 @@ export default class HomePageNavigator extends Component {
       <Tab.Navigator
         tabBar={(props) => <NavigationTabs {...props} />}
         style={styles.navigationContainer}
-        backBehavior="initialRoute"
+        backBehavior="none"
         removeClippedSubviews={true}
         initialRouteName="Courses"
       >

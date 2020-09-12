@@ -18,7 +18,7 @@ export default class FavouritesPage extends Component {
       <View style={styles.container}>
         <Text style={styles.noticeText}>اضغط مطولا لحذف الدورة</Text>
         <FlatList
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           data={courses}
           renderItem={({ item }) => (
             <>

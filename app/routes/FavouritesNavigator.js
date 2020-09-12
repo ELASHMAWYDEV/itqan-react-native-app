@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 
 //Screens
-import { FavouritesPage } from "../screens/Favourites/index";
+import FavouritesPage from "../screens/Favourites/FavouritesPage";
 
 
 //Globals
