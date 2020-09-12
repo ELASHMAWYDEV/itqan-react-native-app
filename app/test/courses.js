@@ -6,6 +6,8 @@ const courses = [
     price: 20,
     imageUrl:
       "https://images.pexels.com/photos/1646953/pexels-photo-1646953.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    rate: 4.65,
+    numOfRates: 50,
     author: {
       id: 1,
       name: "محمد الأحمدي",
@@ -19,6 +21,8 @@ const courses = [
     price: 30,
     imageUrl:
       "https://images.pexels.com/photos/354939/pexels-photo-354939.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      rate: 4.65,
+      numOfRates: 50,
     author: {
       id: 1,
       name: "محمد الأحمدي",
@@ -32,6 +36,8 @@ const courses = [
     price: 40,
     imageUrl:
       "https://images.pexels.com/photos/164455/pexels-photo-164455.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      rate: 4.76,
+      numOfRates: 50,
     author: {
       id: 1,
       name: "محمد الأحمدي",
@@ -45,6 +51,8 @@ const courses = [
     price: 60,
     imageUrl:
       "https://images.pexels.com/photos/354939/pexels-photo-354939.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      rate: 5,
+      numOfRates: 50,
     author: {
       id: 1,
       name: "محمد الأحمدي",
@@ -58,6 +66,8 @@ const courses = [
     price: 60,
     imageUrl:
       "https://images.pexels.com/photos/1646953/pexels-photo-1646953.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      rate: 3.89,
+      numOfRates: 45,
     author: {
       id: 1,
       name: "محمد الأحمدي",

@@ -105,6 +105,12 @@ export default class FavouriteCourse extends Component {
                 </View>
               </View>
               <View style={styles.courseInfo}>
+                <View style={styles.rateContainer}>
+                  <Icon name="ios-star" size={20} color={Colors.orange} />
+                  <View style={styles.rate}>
+                    <Text style={styles.rateText}>{course.rate.toFixed(1)}  ({course.numOfRates})</Text>
+                  </View>
+                </View>
                 <View style={styles.authorContianer}>
                   <Image
                     source={{
@@ -114,7 +120,9 @@ export default class FavouriteCourse extends Component {
                   />
                   <Text style={styles.authorName}>{course.author.name}</Text>
                 </View>
-                <Text style={styles.courseTitle} numberOfLines={2}>{course.title}</Text>
+                <Text style={styles.courseTitle} numberOfLines={2}>
+                  {course.title}
+                </Text>
               </View>
             </Animated.View>
           </TouchableNativeFeedback>
@@ -152,6 +160,23 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     flexDirection: "row-reverse",
   },
+  rateContainer: {
+    position: "absolute",
+    top: 10,
+    left: 15,
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  rate: {
+    backgroundColor: "rgba(255,172,65,0.3)",
+    paddingHorizontal: 8,
+    marginLeft: 5,
+    borderRadius: 10,
+  },
+  rateText: {
+    fontFamily: Fonts.beinNormal,
+    color: Colors.orange
+  },
   imageContainer: {
     width: "30%",
     height: "100%",
@@ -174,11 +199,11 @@ const styles = StyleSheet.create({
   courseInfo: {
     width: "70%",
     paddingHorizontal: 18,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   authorContianer: {
     flexDirection: "row-reverse",
-    alignItems: "center"
+    alignItems: "center",
   },
   authorImage: {
     width: 25,
@@ -189,12 +214,14 @@ const styles = StyleSheet.create({
   authorName: {
     fontFamily: Fonts.beinNormal,
     marginHorizontal: 10,
-    fontSize: 12
+    fontSize: 12,
   },
   courseTitle: {
+    flex: 1,
     fontFamily: Fonts.beinNormal,
     fontSize: 15,
     marginTop: 10,
     lineHeight: 26,
-  }
+    textAlignVertical: "center",
+  },
 });

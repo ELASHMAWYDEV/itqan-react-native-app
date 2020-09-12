@@ -23,7 +23,6 @@ export default class FavouritesPage extends Component {
           renderItem={({ item }) => (
             <>
               <FavouriteCourse course={item} />
-              <FavouriteCourse course={item} />
             </>
           )}
           contentContainerStyle={styles.flatList}
