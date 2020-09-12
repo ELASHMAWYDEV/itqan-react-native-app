@@ -5,7 +5,11 @@ export default class Categories extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+      }}>
         <Text> Categories </Text>
       </View>
     );

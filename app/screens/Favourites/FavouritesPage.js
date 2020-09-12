@@ -35,9 +35,8 @@ export default class FavouritesPage extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
   },
-  flatList: { paddingHorizontal: 5, paddingTop: 5, paddingBottom: 60 },
+  flatList: { paddingHorizontal: 20, paddingTop: 5, paddingBottom: 60 },
   noticeText: {
     fontFamily: Fonts.beinNormal,
     textAlign: "center",

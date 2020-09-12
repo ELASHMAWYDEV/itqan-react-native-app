@@ -6,7 +6,11 @@ export default class Materials extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+      }}>
         <Text> Materials </Text>
       </View>
     );

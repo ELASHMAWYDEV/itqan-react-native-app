@@ -6,7 +6,11 @@ export default class FinishedCourses extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+      }}>
         <Text> FinishedCourses </Text>
       </View>
     );

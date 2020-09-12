@@ -16,7 +16,7 @@ export default class MyCoursesNavigator extends Component {
     return (
       <Tab.Navigator initialRouteName="MyCourses" style={styles.navigator} tabBarOptions={{
         indicatorStyle: styles.indicator,
-        style: {backgroundColor: Colors.lightGray}
+        style: {backgroundColor: Colors.white}
       }} sceneContainerStyle={{backgroundColor: Colors.white}}>
         <Tab.Screen
           name="FinishedCourses"
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   navigator: {
     paddingTop: StatusBarHeight,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   },
   indicator: {
     backgroundColor: Colors.primary,

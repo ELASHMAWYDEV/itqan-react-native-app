@@ -8,7 +8,8 @@ import {
   TextInput,
   TouchableNativeFeedback,
   ScrollView,
-  SafeAreaView
+  YellowBox,
+  SafeAreaView,
 } from "react-native";
 import Icon from "react-native-ionicons";
 
@@ -19,64 +20,69 @@ import Colors from "../../assets/colors";
 //Component
 import SelectInput from "../../components/SelectInput";
 
-
 //The Home Page Navigator
 import HomePageNavigator from "../../routes/HomePageNavigator";
 
 const StatusBarHeight = StatusBar.currentHeight;
+
+YellowBox.ignoreWarnings([
+  "VirtualizedLists should never be nested inside plain ScrollViews with the same orientation",
+]);
 
 export default class HomePage extends Component {
   state = {};
   render() {
     return (
       <SafeAreaView style={styles.mainContainer}>
-        <View style={styles.imageSliderContainer}>
-          <Image
-            style={{
-              resizeMode: "cover",
-              width: "100%",
-              height: 200,
-            }}
-            source={{
-              uri:
-                "https://images.pexels.com/photos/5195671/pexels-photo-5195671.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-            }}
-          />
-          <View style={styles.dotsContainer}>
-            <View style={styles.dot}></View>
-            <View style={styles.dot}></View>
-            <View style={[styles.dot, {backgroundColor: "white"}]}></View>
-            <View style={styles.dot}></View>
-          </View>
-        </View>
-        <View style={styles.searchBoxContainer}>
-          <TouchableNativeFeedback>
-            <View style={styles.searchSelect}>
-              <Text style={styles.searchSelectText}>دروس</Text>
-              <Icon
-              name="ios-arrow-down"
-              color={Colors.primary}
-              style={styles.searchSelectIcon}
-                size={20}
-              />
-              <SelectInput
-              selection={[
-                {
-                  value: "courses",
-                  label: "دروس",
-                },
-              ]}
+        <ScrollView>
+          <View style={styles.imageSliderContainer}>
+            <Image
+              style={{
+                resizeMode: "cover",
+                width: "100%",
+                height: 200,
+              }}
+              source={{
+                uri:
+                  "https://images.pexels.com/photos/5195671/pexels-photo-5195671.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+              }}
             />
+            <View style={styles.dotsContainer}>
+              <View style={styles.dot}></View>
+              <View style={styles.dot}></View>
+              <View style={[styles.dot, { backgroundColor: "white" }]}></View>
+              <View style={styles.dot}></View>
             </View>
-          </TouchableNativeFeedback> 
+          </View>
+          <View style={styles.searchBoxContainer}>
+            <TouchableNativeFeedback>
+              <View style={styles.searchSelect}>
+                <Text style={styles.searchSelectText}>دروس</Text>
+                <Icon
+                  name="ios-arrow-down"
+                  color={Colors.primary}
+                  style={styles.searchSelectIcon}
+                  size={20}
+                />
+                <SelectInput
+                  selection={[
+                    {
+                      value: "courses",
+                      label: "دروس",
+                    },
+                  ]}
+                />
+              </View>
+            </TouchableNativeFeedback>
             <View style={styles.searchSeparator}></View>
-          <TextInput
-            placeholder="ابحث الأن عن الدورات"
-            placeholderTextColor={Colors.darkGray}
-            style={styles.searchText}
-          />
-        </View>
-        <HomePageNavigator />
+            <TextInput
+              placeholder="ابحث الأن عن الدورات"
+              placeholderTextColor={Colors.darkGray}
+              style={styles.searchText}
+            />
+          </View>
+          <HomePageNavigator />
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     paddingTop: StatusBarHeight,
     flex: 1,
-    height: 1000
+    height: 1000,
   },
   searchBoxContainer: {
     width: "85%",
@@ -109,24 +115,22 @@ const styles = StyleSheet.create({
     width: "30%",
     justifyContent: "center",
     alignItems: "center",
-    flexDirection: "row-reverse"
+    flexDirection: "row-reverse",
   },
   searchSelectText: {
     fontFamily: Fonts.beinNormal,
     fontSize: 16,
     textAlign: "center",
-    color: Colors.primary
+    color: Colors.primary,
   },
   searchSelectIcon: {
-    transform: [
-      {translateX: -10}
-    ]
+    transform: [{ translateX: -10 }],
   },
   searchSeparator: {
     width: 1,
     height: "70%",
     backgroundColor: Colors.darkGray,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   dotsContainer: {
     position: "absolute",
@@ -141,5 +145,4 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.7)",
     marginHorizontal: 10,
   },
-  
 });
