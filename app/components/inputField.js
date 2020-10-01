@@ -19,7 +19,6 @@ import Fonts from "../assets/fonts";
 
 class InputField extends Component {
   state = {
-    value: this.props.value.toString(),
     secured: this.props.secured,
     eyeIcon: "eye-off",
     showDatePicker: false,
@@ -83,7 +82,7 @@ class InputField extends Component {
               this.props.onChangeText(value) !== undefined;
               this.setState({ value });
             }}
-            value={this.state.value}
+            value={this.state.value || this.props.value.toString()}
             editable={this.props.DatePicker ? false : true}
           />
 

@@ -25,7 +25,7 @@ export default class CourseBadge extends Component {
     let course = this.props.course;
     return (
       <View style={styles.container}>
-        <TouchableNativeFeedback onPress={() => null} background={TouchableNativeFeedback.Ripple(Colors.darkGray)}>
+        <TouchableNativeFeedback onPress={() => this.props.navigation.navigate("CoursePage")} background={TouchableNativeFeedback.Ripple(Colors.darkGray)}>
           <View>
             <Image
               style={styles.image}

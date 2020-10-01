@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "itqan",
+    "name": "أكاديمية إتقان",
     "slug": "itqan",
     "scheme": "itqan",
     "version": "1.0.0",
@@ -9,7 +9,7 @@
     "splash": {
       "image": "./app/assets/main-img/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#3E47C7"
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -28,7 +28,7 @@
     "android": {
       "package": "com.itqan.elearning"
     },
-    "sdkVersion": "38.0.0",
+    "sdkVersion": "39.0.0",
     "platforms": [
       "ios",
       "android",

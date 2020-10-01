@@ -25,7 +25,7 @@ export default class Courses extends Component {
           <FlatList
             keyExtractor={item => item.id}
             data={courses}
-            renderItem={({ item }) => <CourseBadge course={item}/>}
+            renderItem={({ item }) => <CourseBadge course={item} {...this.props}/>}
             numColumns={2}
             contentContainerStyle={styles.flatList}
           />

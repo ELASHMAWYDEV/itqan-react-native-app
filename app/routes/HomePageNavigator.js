@@ -37,10 +37,10 @@ export default class HomePageNavigator extends Component {
         removeClippedSubviews={true}
         initialRouteName="Courses"
       >
-      <Tab.Screen name="Categories" component={Categories} />
-      <Tab.Screen name="LiveSessions" component={LiveSessions} />
-      <Tab.Screen name="Materials" component={Materials} />
-      <Tab.Screen name="Courses" component={Courses} />
+        <Tab.Screen name="Categories" component={Categories} />
+        <Tab.Screen name="LiveSessions" component={LiveSessions} />
+        <Tab.Screen name="Materials" component={Materials} />
+        <Tab.Screen name="Courses" component={Courses} {...this.props}/>
       </Tab.Navigator>
     );
   }
@@ -85,7 +85,6 @@ class NavigationTabs extends Component {
   componentDidMount = () => {
     //To go to Courses screen on clicking back button
     BackHandler.addEventListener("hardwareBackPress", this.goToInitialRoute);
-    
   };
 
   componentWillUnmount = () => {

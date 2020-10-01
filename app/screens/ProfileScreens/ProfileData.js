@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableNativeFeedback,
 } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
+import * as SecureStore from 'expo-secure-store';
 import Icon from "react-native-ionicons";
 
 //Custom Components
@@ -34,17 +34,15 @@ class ProfileData extends Component {
   componentDidMount = async () => {
     //Get user from storage
     try {
-      const user = await AsyncStorage.getItem("@user_data");
+      const user = await SecureStore.getItemAsync("user_data");
 
       if (user != null) {
         this.setState({ user: JSON.parse(user) });
-        console.log(user);
       }
     } catch (e) {
       alert(e.message);
     }
 
-    setTimeout(() => this.setState({ test: "hello" }), 1000);
   };
 
   getUser = async () => {

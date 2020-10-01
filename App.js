@@ -1,16 +1,24 @@
 import React, { Component } from "react";
 import * as Font from "expo-font";
-import { BackHandler } from 'react-native';
-import AsyncStorage from "@react-native-community/async-storage";
+import { BackHandler, LogBox } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
 import AuthNavigator from "./app/routes/AuthNavigator";
-import BottomNavigator from "./app/routes/BottomNavigator";
+import MainNavigation from "./app/routes/MainNavigation";
 import LoadingModal from "./app/components/LoadingModal";
 
 
 //Custom Components
 import Prompt from "./app/components/Prompt"; //to handle closing the app
 
+
+//Ignore Some Warnings
+LogBox.ignoreLogs([
+  "VirtualizedLists",
+  "Non-serializable values",
+  "componentWillReceiveProps",
+  "componentWillMount"
+]);
 
 export default class App extends Component {
   state = {
@@ -23,8 +31,8 @@ export default class App extends Component {
     BackHandler.addEventListener("hardwareBackPress", this.promptClose);
 
     try {
-      const accessToken = await AsyncStorage.getItem("@access_token");
-      const userData = await AsyncStorage.getItem("@user_data");
+      const accessToken = await SecureStore.getItemAsync("access_token");
+      const userData = await SecureStore.getItemAsync("user_data");
 
       if (accessToken && userData) {
         this.setState({ isSignedIn: true });
@@ -37,7 +45,7 @@ export default class App extends Component {
         "Ionicons": require('react-native-ionicons/fonts/Ionicons.ttf'),
       }).then(() => this.setState({ fontLoaded: true }));
     } catch (e) {
-      
+      console.log(e.message)
     }
   };
 
@@ -66,8 +74,8 @@ export default class App extends Component {
 
   logout = async () => {
     try {
-      await AsyncStorage.removeItem("@access_token");
-      await AsyncStorage.removeItem("@user_data");
+      await SecureStore.deleteItemAsync("access_token");
+      await SecureStore.deleteItemAsync("user_data");
       this.setState({ isSignedIn: !this.state.isSignedIn });
     } catch (e) {
       console.log(e.message);
@@ -79,7 +87,7 @@ export default class App extends Component {
     return !this.state.fontLoaded ? (
       <LoadingModal />
     ) : this.state.isSignedIn ? (
-        <BottomNavigator logout={() => this.logout()}/>
+        <MainNavigation logout={() => this.logout()}/>
       ) : (
           <>
           {this.state.promptClose && (

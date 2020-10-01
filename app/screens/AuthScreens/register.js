@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
-import AsyncStorage from "@react-native-community/async-storage";
+import * as SecureStore from 'expo-secure-store';
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 
 import * as Config from "../../config/config";
@@ -92,8 +92,8 @@ export default class Register extends Component {
       const data = await response.json();
 
       if (data.success && data.accessToken) {
-        await AsyncStorage.setItem("@access_token", data.accessToken);
-        await AsyncStorage.setItem("@user_data", JSON.stringify(data.user));
+        await SecureStorage.setItemAsync("access_token", data.accessToken);
+        await SecureStorage.setItemAsync("user_data", JSON.stringify(data.user));
 
         
         this.props.route.params.login();

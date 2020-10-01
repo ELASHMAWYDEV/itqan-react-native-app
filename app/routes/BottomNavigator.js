@@ -8,7 +8,6 @@ import {
   StyleSheet,
   Animated,
   BackHandler,
-  YellowBox
 } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -23,7 +22,9 @@ import {
 import Colors from "../assets/colors";
 import Fonts from "../assets/fonts";
 
-import HomeNavigation from "./HomeNavigation";
+import {
+  HomePage
+} from "../screens/HomeScreens/index";
 import ProfileNavigation from "./ProfileNavigation";
 import MyCoursesPage from "../screens/MyCourses/MyCoursesPage";
 import Notifications from "../screens/Notifications/Notifications";
@@ -32,9 +33,6 @@ import { Favourites } from "../screens/Favourites/index";
 const Tab = createBottomTabNavigator();
 
 
-YellowBox.ignoreWarnings([
-  'Non-serializable values were found in the navigation state',
-])
 class BottomTabBar extends Component {
 
   componentDidMount = () => {
@@ -251,7 +249,6 @@ export default class BottomNavigator extends Component {
   
   render() {
     return (
-      <NavigationContainer>
         <Tab.Navigator
           tabBar={(props) => <BottomTabBar {...props} />}
           initialRouteName="Home"
@@ -259,7 +256,7 @@ export default class BottomNavigator extends Component {
         >
           <Tab.Screen name="Notifications" component={Notifications} />
           <Tab.Screen name="MyCoursesPage" component={MyCoursesPage} />
-          <Tab.Screen name="Home" component={HomeNavigation} />
+          <Tab.Screen name="Home" component={HomePage} />
           <Tab.Screen name="Favourites" component={Favourites} />
           <Tab.Screen
             name="Profile"
@@ -267,7 +264,6 @@ export default class BottomNavigator extends Component {
             initialParams={{ logout: () => this.props.logout() }}
           />
         </Tab.Navigator>
-      </NavigationContainer>
     );
   }
 }

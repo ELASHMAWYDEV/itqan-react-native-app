@@ -8,7 +8,6 @@ import {
   TextInput,
   TouchableNativeFeedback,
   ScrollView,
-  YellowBox,
   SafeAreaView,
 } from "react-native";
 import Icon from "react-native-ionicons";
@@ -25,15 +24,21 @@ import HomePageNavigator from "../../routes/HomePageNavigator";
 
 const StatusBarHeight = StatusBar.currentHeight;
 
-YellowBox.ignoreWarnings([
-  "VirtualizedLists should never be nested inside plain ScrollViews with the same orientation",
-]);
-
 export default class HomePage extends Component {
   state = {};
   render() {
     return (
       <SafeAreaView style={styles.mainContainer}>
+        <TouchableNativeFeedback onPress={() => this.props.navigation.navigate("CartNavigator")} useForeground background={TouchableNativeFeedback.Ripple(Colors.white)}>
+          <View style={styles.cartBtnContainer}>
+            <Icon
+              name="cart"
+              style={styles.cartBtn}
+              size={34}
+              color={Colors.white}
+            />
+          </View>
+        </TouchableNativeFeedback>
         <ScrollView>
           <View style={styles.imageSliderContainer}>
             <Image
@@ -81,7 +86,7 @@ export default class HomePage extends Component {
               style={styles.searchText}
             />
           </View>
-          <HomePageNavigator />
+          <HomePageNavigator {...this.props} />
         </ScrollView>
       </SafeAreaView>
     );
@@ -144,5 +149,18 @@ const styles = StyleSheet.create({
     borderRadius: 10 / 2,
     backgroundColor: "rgba(255,255,255,0.7)",
     marginHorizontal: 10,
+  },
+  cartBtnContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.primary,
+    position: "absolute",
+    width: 55,
+    height: 55,
+    borderRadius: 55 / 2,
+    zIndex: 20,
+    bottom: 10,
+    left: 10,
+    overflow: 'hidden',
   },
 });

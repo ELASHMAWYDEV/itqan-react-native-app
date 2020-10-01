@@ -9,8 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-community/async-storage";
-
+import * as SecureStore from 'expo-secure-store';
 import * as Config from "../../config/config";
 
 //Custom Components
@@ -38,7 +37,7 @@ export default class Login extends Component {
 
   componentDidMount = async () => {
     try {
-      const accessToken = await AsyncStorage.getItem("@access_token");
+      const accessToken = await SecureStore.getItemAsync("access_token");
       if (accessToken !== null) {
         this.props.route.params.login();
       }
@@ -54,7 +53,7 @@ export default class Login extends Component {
     const password = this.state.password.trim();
 
     try {
-      const accessToken = await AsyncStorage.getItem("@access_token");
+      const accessToken = await SecureStore.getItemAsync("access_token");
 
       const response = await fetch(`${Config.api}/auth/login`, {
         method: "POST",
@@ -71,8 +70,8 @@ export default class Login extends Component {
       const data = await response.json();
 
       if (data.success && data.accessToken) {
-        await AsyncStorage.setItem("@access_token", data.accessToken);
-        await AsyncStorage.setItem("@user_data", JSON.stringify(data.user));
+        await SecureStore.setItemAsync("access_token", data.accessToken);
+        await SecureStore.setItemAsync("user_data", JSON.stringify(data.user));
         this.props.route.params.login();
       } else if (!data.success) {
         this.setState({ errors: data.codes, success: false });

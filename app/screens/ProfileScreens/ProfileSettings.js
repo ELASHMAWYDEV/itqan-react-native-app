@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
 
 //Utilities
 import Languages from "../../utility/Languages";
@@ -36,7 +35,7 @@ class ProfileSettings extends Component {
       <View>
         <ThreeDots {...this.props} />
         <ScrollView style={styles.container}>
-          <ImageCircle onPress={() => navigation.navigate("ProfileData")} />
+          <ImageCircle onPress={() => navigation.navigate("ProfileData")} leftMargin={2}/>
           <SettingsOption
             icon="ios-globe"
             title="اللغة"
